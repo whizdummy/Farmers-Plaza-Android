@@ -6,50 +6,44 @@ import java.util.Date;
 
 public class Person extends ParseObject{
 
-    private String strFirstName;
-    private String strMiddleName;
-    private String strLastName;
-    private String strAddress;
-    private long datBirthday;
-
     public Date getBirthday() {
-        return new Date(this.datBirthday);
+        return getDate("birthday");
     }
 
     public void setBirthday(Date datBirthday) {
-        this.datBirthday = datBirthday.getTime();
+        put("birthday", datBirthday);
     }
 
     public String getAddress() {
-        return strAddress;
+        return getString("address");
     }
 
     public void setAddress(String strAddress) {
-        this.strAddress = strAddress;
+        put("address", strAddress);
     }
 
     public String getFirstName() {
-        return strFirstName;
+        return getString("firstName");
     }
 
     public void setFirstName(String strFirstName) {
-        this.strFirstName = strFirstName;
+        put("firstName", strFirstName);
     }
 
     public String getLastName() {
-        return strLastName;
+        return getString("lastName");
     }
 
     public void setLastName(String strLastName) {
-        this.strLastName = strLastName;
+        put("lastName", strLastName);
     }
 
     public String getMiddleName() {
-        return strMiddleName;
+        return getString("middleName");
     }
 
     public void setMiddleName(String strMiddleName) {
-        this.strMiddleName = strMiddleName;
+        put("middleName", strMiddleName);
     }
 
 }//end public class Person

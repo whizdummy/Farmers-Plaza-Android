@@ -1,17 +1,17 @@
 package com.farmers_plaza.farmersplaza.models;
 
+import com.parse.ParseClassName;
 import com.parse.ParseUser;
 
+@ParseClassName("Farmer")
 public class Farmer extends Person{
 
-    private ParseUser user;
-
     public void setUser(ParseUser user){
-        this.user = user;
+        put("user", user);
     }
 
     public ParseUser getUser(){
-        return this.user;
+        return getParseUser("user");
     }
 
 }//end public class Farmer
