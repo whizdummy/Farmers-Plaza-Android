@@ -1,10 +1,19 @@
 package com.farmers_plaza.farmersplaza.models;
 
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import java.util.Date;
 
 public class Person extends ParseObject{
+
+    public void setUser(ParseUser user){
+        put("user", user);
+    }
+
+    public ParseUser getUser(){
+        return getParseUser("user");
+    }
 
     public Date getBirthday() {
         return getDate("birthday");
