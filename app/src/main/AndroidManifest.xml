@@ -13,7 +13,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.parse.APPLICATION_ID"
             android:value="hbt4JEmtcJ2wBYSL289AgeMcN1KtruvUpZkm81l7" />
@@ -28,6 +27,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".general.RegistrationActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

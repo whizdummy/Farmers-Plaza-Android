@@ -13,6 +13,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:textSize="50sp"
-        android:text="@string/message" />
+        android:textSize="50sp" />
 </RelativeLayout>

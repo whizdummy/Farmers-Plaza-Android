@@ -1,4 +1,17 @@
 <resources>
     <string name="app_name">Farmers Plaza</string>
-    <string name="message">Zupp Niggas!</string>
+    <string name="first_name_text">First Name</string>
+    <string name="middle_name_text">Middle Name</string>
+    <string name="last_name_text">Last Name</string>
+    <string name="user_type_text">User Type</string>
+    <string-array name="user_type_category">
+        <item>Agriculturist</item>
+        <item>Farmer</item>
+    </string-array>
+    <string name="phone_text">Cellphone Number</string>
+    <string name="addresss_text">Address</string>
+    <string name="email_text">Email</string>
+    <string name="password_text">Password</string>
+    <string name="confirm_password_text">Confirm Password</string>
+    <string name="register_text">Register</string>
 </resources>
