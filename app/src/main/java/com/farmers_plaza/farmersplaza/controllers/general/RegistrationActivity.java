@@ -103,7 +103,7 @@ public class RegistrationActivity extends AppCompatActivity {
         user.setPassword(password.getText().toString());
         if (userType.getSelectedItem().toString().equals("Farmer")){
 
-            user.put("personType", true);
+            user.put("isAdmin", false);
             person = new Farmer();
             person.setUser(user);
             person.setFirstName(firstName.getText().toString());
@@ -115,7 +115,7 @@ public class RegistrationActivity extends AppCompatActivity {
         }//end if (userType.getSelectedItem().toString().equals("Farmer"))
         else if (userType.getSelectedItem().toString().equals("Agriculturist")) {
 
-            user.put("personType", false);
+            user.put("isAdmin", true);
             person = new Agriculturist();
             person.setUser(user);
             person.setFirstName(firstName.getText().toString());
