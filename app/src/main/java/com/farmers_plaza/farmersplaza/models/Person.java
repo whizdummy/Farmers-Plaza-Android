@@ -55,4 +55,12 @@ public class Person extends ParseObject{
         put("middleName", strMiddleName);
     }
 
+    public void setPhoneNo(String strPhoneNo){
+        put("phoneNo", strPhoneNo);
+    }
+
+    public String getPhoneNo() {
+        return getString("phoneNo");
+    }
+
 }//end public class Person
