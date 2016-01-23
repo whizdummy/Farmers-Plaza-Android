@@ -1,4 +1,4 @@
-package com.farmers_plaza.farmersplaza.general;
+package com.farmers_plaza.farmersplaza.controllers.general;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
