@@ -1,4 +1,4 @@
-package com.farmers_plaza.farmersplaza.dal;
+package com.farmers_plaza.farmersplaza.models;
 
 import com.parse.ParseObject;
 
