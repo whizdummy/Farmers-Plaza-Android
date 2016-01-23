@@ -21,7 +21,11 @@
             android:paddingTop="@dimen/activity_vertical_margin"
             tools:context="com.farmers_plaza.farmersplaza.general.RegistrationActivity">
 
-
+            <EditText
+                android:id="@+id/edit_text_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/username_text"/>
 
             <EditText
                 android:id="@+id/edit_text_fname"
