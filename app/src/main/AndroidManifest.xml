@@ -30,7 +30,12 @@
         <activity
             android:name=".controllers.general.RegistrationActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".controllers.general.LoginActivity"></activity>
+        <activity
+            android:name=".controllers.general.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".farmer.IncomeActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
