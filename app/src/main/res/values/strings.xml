@@ -18,4 +18,5 @@
     <string name="email_username_text">Email / Username</string>
     <string name="login_text">Login</string>
     <string name="forgot_pass_text">Forgot Password?</string>
+    <string name="title_activity_farm_location">Map</string>
 </resources>
