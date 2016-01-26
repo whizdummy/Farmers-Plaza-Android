@@ -1,7 +1,11 @@
 package com.farmers_plaza.farmersplaza.dal;
 
+import android.util.Log;
+
 import com.farmers_plaza.farmersplaza.models.Farmer;
+import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 public class FarmerDao {
 
@@ -17,7 +21,14 @@ public class FarmerDao {
             if (queryFarmer.count() > 0){
                 return "error-existing";
             }//end if(queryFarmer.count()>0)
-            farmer.saveInBackground();
+            farmer.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e==null){
+                        Log.e("TAG", e.getMessage());
+                    }
+                }
+            });
             return "success";
 
         }catch (Exception e){

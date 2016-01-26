@@ -16,20 +16,19 @@ public class AgriculturistBusiness {
         regExpression = "([A-z '-]){2,}";
         agri = trimAgriculturistValues(agri);
         if (!agri.getFirstName().matches(regExpression))
-            return "First name contains invalid characters";
+            return "error-validate";
         if (!agri.getMiddleName().matches(regExpression))
-            return "Middle name contains invalid characters";
+            return "error-validate";
         regExpression = "([A-z '.-]){2,}";
         if (!agri.getLastName().matches(regExpression))
-            return "Last name contains invalid characters";
+            return "error-validate";
         regExpression = "([A-z ,-]){2,}";
         if (!agri.getAddress().matches(regExpression))
-            return "Address contains invalid characters";
+            return "error-validate";
         regExpression = "(^09)+([0-9]){9}";
         if (!agri.getPhoneNo().matches(regExpression))
-            return "Phone number contains invalid characters";
-        agriculturistDao.registerAgriculturist(agri);
-        return "Success";
+            return "error-validate";
+        return agriculturistDao.registerAgriculturist(agri);
     }//end public String validateAgriculturist
 
     private Agriculturist trimAgriculturistValues(Agriculturist agri){

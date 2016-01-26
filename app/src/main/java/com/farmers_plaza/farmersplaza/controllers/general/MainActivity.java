@@ -1,30 +1,39 @@
 package com.farmers_plaza.farmersplaza.controllers.general;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.farmers_plaza.farmersplaza.R;
+import com.farmers_plaza.farmersplaza.farmer.HomeScreenActivity;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
-public class LoginActivity extends AppCompatActivity {
-
+public class MainActivity extends AppCompatActivity {
+    Button                      btnRegister;
+    Intent                      intent;
     EditText                    username;
     EditText                    password;
     Button                      btnLogin;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         setUp();
-        clickBtnLogin();
-    }//end onCreate
+        btnLoginOnClick();
+        btnSignupOnClick();
+    }
 
     public void setUp(){
 
@@ -34,32 +43,43 @@ public class LoginActivity extends AppCompatActivity {
 
     }//end setUp()
 
-    public void clickBtnLogin(){
-
+    private void btnLoginOnClick() {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 ParseUser.logInInBackground(username.getText().toString(), password.getText().toString(),
                         new LogInCallback() {
                             @Override
                             public void done(ParseUser user, ParseException e) {
-                                if (e==null){
+                                if (e == null) {
 
-                                    //show Menu View
+                                    showIntent(HomeScreenActivity.class);
 
                                 }//end if e == null
-                                else{
+                                else {
 
                                     //show Error message
+                                    Log.e("TAG", e.getMessage());
 
                                 }//end else
                             }//end done
                         });//end loginBackground
+            }
+        });
+    }
 
-            }//end onClick
-        });//end setOnClickListener
+    private void btnSignupOnClick() {
+        btnRegister = (Button) findViewById(R.id.btnSignUp);
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showIntent(RegistrationActivity.class);
+            }
+        });
+    }
 
-    }//end clickBtnLogin()
-
-}//end LoginActivity
+    private void showIntent(Class className) {
+        intent = new Intent(MainActivity.this, className);
+        startActivity(intent);
+    }
+}

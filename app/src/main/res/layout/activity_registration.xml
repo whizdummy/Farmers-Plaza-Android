@@ -73,7 +73,8 @@
                     android:id="@+id/spinner_user_type"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:entries="@array/user_type">
 
                 </Spinner>
             </LinearLayout>

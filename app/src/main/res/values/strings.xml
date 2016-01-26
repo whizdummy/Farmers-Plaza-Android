@@ -21,4 +21,8 @@
     <string name="signUpText">SIGN UP</string>
     <string name="forgot_pass_text">Forgot Password?</string>
     <string name="title_activity_farm_location">Map</string>
+    <string-array name="user_type">
+        <item>Farmer</item>
+        <item>Agriculturist</item>
+    </string-array>
 </resources>
