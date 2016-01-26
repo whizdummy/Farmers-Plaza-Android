@@ -49,13 +49,14 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Person.logInInBackground(username.getText().toString(), password.getText().toString(),
+                ParseUser.logInInBackground(username.getText().toString(), password.getText().toString(),
                         new LogInCallback() {
                             @Override
                             public void done(ParseUser user, ParseException e) {
                                 if (e == null) {
 
-                                    if (Person.getCurrentUser().getBoolean("isAdmin") == false) {
+                                    if (ParseUser.getCurrentUser().getBoolean("isAdmin") == false) {
+                                        System.out.println("LOGIN AS FARMER");
                                         showIntent(HomeScreenActivity.class);
                                     }else{
                                         //show Agri Home

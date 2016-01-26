@@ -21,14 +21,14 @@ public class AgriculturistDao {
             if (queryAgriculturist.count() > 0) {
                 return "error-existing";
             }//end if(queryFarmer.count()>0)
-            agri.signUpInBackground(new SignUpCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if(e != null) {
-                        Log.e("SIGN UP", e.getMessage());
-                    }
-                }
-            });
+//            agri.signUpInBackground(new SignUpCallback() {
+//                @Override
+//                public void done(ParseException e) {
+//                    if(e != null) {
+//                        Log.e("SIGN UP", e.getMessage());
+//                    }
+//                }
+//            });
             return "success";
 
         }catch(ParseException pe){

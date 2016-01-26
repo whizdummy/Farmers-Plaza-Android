@@ -14,26 +14,16 @@ import com.parse.SignUpCallback;
 
 import bolts.Task;
 
-public class FarmerDao {
-    private static String strStatus;
+public class FarmerDao extends Thread{
+    private static String strStatus = null;
     private static Farmer farmer;
 
-    public Farmer retrieveFarmer(Person person){
+    public Farmer retrieveFarmer(ParseUser user){
 
         try{
-
             ParseQuery<Farmer> queryFarmer = ParseQuery.getQuery(Farmer.class);
-            queryFarmer.whereEqualTo("objectId", person.getObjectId());
-            queryFarmer.getFirstInBackground(new GetCallback<Farmer>() {
-                @Override
-                public void done(Farmer object, ParseException e) {
-                    if (e!=null){
-                        Log.e("TAG", e.getMessage());
-                    }else{
-                        farmer = object;
-                    }
-                }
-            });
+            queryFarmer.whereEqualTo("user", user);
+            return queryFarmer.getFirst();
 
         }catch(Exception e){
             e.printStackTrace();
@@ -43,7 +33,7 @@ public class FarmerDao {
 
     }
 
-    public String registerFarmer(Farmer farmer){
+    public String registerFarmer(final Farmer farmer){
 
         try{
 
@@ -55,18 +45,10 @@ public class FarmerDao {
 //                return "error-existing";
                 strStatus = "error-existing";
             }//end if(queryFarmer.count()>0)
-            farmer.signUpInBackground(new SignUpCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if(e != null) {
-                        Log.e("TAG", e.getMessage());
-                    } else {
-                        strStatus = "success";
-                    }
-                }
-            });
+            farmer.save();
+
             Log.e("SAVE STATUS", strStatus);
-            return strStatus;
+            return "success";
         }catch(ParseException pe){
             pe.printStackTrace();
             return "error-existing";
