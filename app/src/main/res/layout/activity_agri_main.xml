@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Layug, Ken"
-            android:id="@+id/textView5"
+            android:id="@+id/text_view_name"
             android:layout_marginTop="30dp"
             android:layout_marginLeft="10dp"
             android:textColor="#ffffff" />
@@ -92,7 +92,7 @@
         android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:text="@string/logout_text"
-        android:id="@+id/button"
+        android:id="@+id/btnLogOut"
         android:layout_gravity="center_horizontal"
         android:background="@color/colorPrimary"
         android:textColor="#ffffff" />
