@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.farmers_plaza.farmersplaza.R;
 import com.farmers_plaza.farmersplaza.agriculturist.AgriHomeScreenActivity;
@@ -17,12 +18,12 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
-    Button                      btnRegister;
-    Intent                      intent;
-    EditText                    username;
-    EditText                    password;
-    Button                      btnLogin;
-    ProgressDialogPrompt progressDialogPrompt;
+    Button                  btnRegister;
+    Intent                  intent;
+    EditText                username;
+    EditText                password;
+    Button                  btnLogin;
+    ProgressDialogPrompt    progressDialogPrompt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
                                 else {
 
                                     //show Error message
-                                    Log.e("TAG", e.getMessage());
-
+                                    Toast.makeText(MainActivity.this, getString(R.string.invalid_user_text), Toast.LENGTH_LONG)
+                                    .show();
                                 }//end else
                                 progressDialogPrompt.stopProgress();
                             }//end done
