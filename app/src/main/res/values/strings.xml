@@ -14,15 +14,20 @@
     <string name="email_text">Email</string>
     <string name="password_text">Password</string>
     <string name="confirm_password_text">Confirm Password</string>
-    <string name="register_text">Register</string>
+    <string name="register_text">REGISTER</string>
     <string name="username_text">Username</string>
     <string name="email_username_text">Email / Username</string>
     <string name="login_text">LOGIN</string>
     <string name="signUpText">SIGN UP</string>
     <string name="forgot_pass_text">Forgot Password?</string>
     <string name="title_activity_farm_location">Map</string>
+<<<<<<< HEAD
+    <string name="profile_text">Profile</string>
+    <string name="logout_text">LOG OUT</string>
+=======
     <string-array name="user_type">
         <item>Farmer</item>
         <item>Agriculturist</item>
     </string-array>
+>>>>>>> 2c68e36b434306c1d29cd6a0e3b5fb409dd9d541
 </resources>

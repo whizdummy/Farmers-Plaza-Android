@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="REGISTER"
+                android:text="@string/register_text"
                 android:id="@+id/textView"
                 android:textColor="#30542c"
                 android:layout_gravity="center_horizontal" />
@@ -118,7 +118,10 @@
                 android:id="@+id/btn_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/register_text" />
+                android:background="@color/colorPrimary"
+                android:text="@string/register_text"
+                android:textSize="18dp"
+                android:textColor="#ffffff" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
