@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     EditText                    username;
     EditText                    password;
     Button                      btnLogin;
+    ProgressDialogPrompt progressDialogPrompt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         username = (EditText)findViewById(R.id.edit_text_email_username);
         password = (EditText)findViewById(R.id.edit_text_password);
         btnLogin = (Button)findViewById(R.id.btn_login);
+        progressDialogPrompt = new ProgressDialogPrompt(this);
 
     }//end setUp()
 
@@ -49,13 +51,13 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialogPrompt.showProgress(getString(R.string.logging_in_text));
                 ParseUser.logInInBackground(username.getText().toString(), password.getText().toString(),
                         new LogInCallback() {
                             @Override
                             public void done(ParseUser user, ParseException e) {
                                 if (e == null) {
-
-                                    if (ParseUser.getCurrentUser().getBoolean("isAdmin") == false) {
+                                    if (!user.getBoolean("isAdmin")) {
                                         System.out.println("LOGIN AS FARMER");
                                         showIntent(HomeScreenActivity.class);
                                     }else{
@@ -70,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
                                     Log.e("TAG", e.getMessage());
 
                                 }//end else
+                                progressDialogPrompt.stopProgress();
                             }//end done
                         });//end loginBackground
             }
