@@ -19,7 +19,9 @@ import com.farmers_plaza.farmersplaza.farmer.HomeScreenActivity;
 import com.farmers_plaza.farmersplaza.models.Agriculturist;
 import com.farmers_plaza.farmersplaza.models.Farmer;
 import com.farmers_plaza.farmersplaza.models.Person;
+import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -84,7 +86,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 if (strStatus.equals("success")){
 
                     //display success view
-                    if (Person.getCurrentUser().getBoolean("isAdmin") == false) {
+                    if (ParseUser.getCurrentUser().getBoolean("isAdmin") == false) {
                         showIntent(HomeScreenActivity.class);
                     }else{
                         //show Agri Home
@@ -119,13 +121,14 @@ public class RegistrationActivity extends AppCompatActivity {
     public void getData(){
 
         ParseUser user = new ParseUser();
+        user.setEmail(email.getText().toString());
+        user.setUsername(username.getText().toString());
+        user.setPassword(password.getText().toString());
         if (userType.getSelectedItem().toString().equals("Farmer")){
 
             person = new Farmer();
-            person.setIsAdmin(false);
-            person.setEmail(email.getText().toString());
-            person.setUsername(username.getText().toString());
-            person.setPassword(password.getText().toString());
+            user.put("isAdmin",false);
+            person.setUser(user);
             person.setFirstName(firstName.getText().toString());
             person.setMiddleName(middleName.getText().toString());
             person.setLastName(lastName.getText().toString());
@@ -136,10 +139,8 @@ public class RegistrationActivity extends AppCompatActivity {
         else if (userType.getSelectedItem().toString().equals("Agriculturist")) {
 
             person = new Agriculturist();
-            person.setIsAdmin(true);
-            person.setEmail(email.getText().toString());
-            person.setUsername(username.getText().toString());
-            person.setPassword(password.getText().toString());
+            user.put("isAdmin", true);
+            person.setUser(user);
             person.setFirstName(firstName.getText().toString());
             person.setMiddleName(middleName.getText().toString());
             person.setLastName(lastName.getText().toString());
@@ -147,6 +148,14 @@ public class RegistrationActivity extends AppCompatActivity {
             person.setPhoneNo(phoneNo.getText().toString());
 
         }//end else if (userType.getSelectedItem().toString().equals("Agriculturist"))
+        user.signUpInBackground(new SignUpCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e!=null){
+                    Log.e("TAG", e.getMessage());
+                }
+            }
+        });
 
     }//end getData()
 

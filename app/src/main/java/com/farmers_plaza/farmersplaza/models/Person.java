@@ -1,19 +1,24 @@
 package com.farmers_plaza.farmersplaza.models;
 
 import com.parse.ParseFile;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import java.io.File;
 import java.util.Date;
 
-public class Person extends ParseUser{
+public class Person extends ParseObject{
 
-    public void setIsAdmin(boolean boolIsAdmin){
-        put("isAdmin", boolIsAdmin);
+    public void setUser(ParseUser user){
+        put("user", user);
     }
 
-    public boolean getIsAdmin(){
-        return getBoolean("isAdmin");
+    public ParseUser getUser(){
+        return getParseUser("user");
+    }
+
+    public String getName(){
+        return getFirstName()+" "+getMiddleName().charAt(0)+". "+getLastName();
     }
 
     public void setDisplayPhoto(ParseFile displayPhoto){

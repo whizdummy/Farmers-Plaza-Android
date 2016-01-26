@@ -6,9 +6,25 @@ import com.farmers_plaza.farmersplaza.models.Agriculturist;
 import com.farmers_plaza.farmersplaza.models.Farmer;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 public class AgriculturistDao {
+
+    public Agriculturist retrieveAgriculturist(ParseUser user){
+
+        try{
+            ParseQuery<Agriculturist> queryAgri = ParseQuery.getQuery(Agriculturist.class);
+            queryAgri.whereEqualTo("user", user);
+            return queryAgri.getFirst();
+
+        }catch(Exception e){
+            e.printStackTrace();
+            Log.e("TAG", e.getMessage());
+        }//try catch
+        return null;
+
+    }
 
     public String registerAgriculturist(Agriculturist agri){
 
@@ -21,14 +37,7 @@ public class AgriculturistDao {
             if (queryAgriculturist.count() > 0) {
                 return "error-existing";
             }//end if(queryFarmer.count()>0)
-            agri.signUpInBackground(new SignUpCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if(e != null) {
-                        Log.e("SIGN UP", e.getMessage());
-                    }
-                }
-            });
+            agri.save();
             return "success";
 
         }catch(ParseException pe){

@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Layug, Ken"
-            android:id="@+id/textView2"
+            android:id="@+id/text_view_name"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:textColor="#ffffff" />

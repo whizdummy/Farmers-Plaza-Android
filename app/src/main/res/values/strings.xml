@@ -21,13 +21,11 @@
     <string name="signUpText">SIGN UP</string>
     <string name="forgot_pass_text">Forgot Password?</string>
     <string name="title_activity_farm_location">Map</string>
-<<<<<<< HEAD
     <string name="profile_text">Profile</string>
     <string name="logout_text">LOG OUT</string>
-=======
     <string-array name="user_type">
         <item>Farmer</item>
         <item>Agriculturist</item>
     </string-array>
->>>>>>> 2c68e36b434306c1d29cd6a0e3b5fb409dd9d541
+    <string name="logging_in_text">Logging In...</string>
 </resources>
