@@ -18,10 +18,11 @@ import com.farmers_plaza.farmersplaza.farmer.HomeScreenActivity;
 import com.farmers_plaza.farmersplaza.models.Agriculturist;
 import com.farmers_plaza.farmersplaza.models.Farmer;
 import com.farmers_plaza.farmersplaza.models.Person;
+import com.farmers_plaza.farmersplaza.service.AgriculturistService;
 import com.farmers_plaza.farmersplaza.service.FarmerService;
 import com.parse.ParseUser;
 
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -91,20 +92,17 @@ public class RegistrationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 getData();
                 String strStatus;
-                ExecutorService es = Executors.newSingleThreadExecutor();
                 progressDialogPrompt.showProgress(getString(R.string.signing_up));
                 try {
                     if (userType.getSelectedItem().toString().equals("Farmer")) {
 
-                        Future<Object> futureObject = es.submit(new FarmerService("registerFarmer", person));
-                        strStatus = futureObject.get().toString();
+                        strStatus = (String) runThread(new FarmerService("registerFarmer", person)).get();
                         progressDialogPrompt.stopProgress();
 
                     }//end if
                     else {
 
-                        AgriculturistBusiness agriculturistBusiness = new AgriculturistBusiness();
-                        strStatus = agriculturistBusiness.validateAgriculturist((Agriculturist) person);
+                        strStatus = (String) runThread(new AgriculturistService("registerAgriculturist",  person)).get();
                         progressDialogPrompt.stopProgress();
 
                     }//end else
@@ -128,9 +126,7 @@ public class RegistrationActivity extends AppCompatActivity {
                             break;
                     }//end switch
 
-                }catch(InterruptedException e){
-                    e.printStackTrace();
-                }catch(ExecutionException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }//end onClick
@@ -174,6 +170,14 @@ public class RegistrationActivity extends AppCompatActivity {
     private void showIntent(Class className) {
         intent = new Intent(RegistrationActivity.this, className);
         startActivity(intent);
+        finish();
     }
+
+    private Future<Object> runThread(Callable object){
+        ExecutorService es = Executors.newSingleThreadExecutor();
+        Future<Object> futureObject = es.submit(object);
+
+        return futureObject;
+    }//end runThread
 
 }//end RegistrationActivity

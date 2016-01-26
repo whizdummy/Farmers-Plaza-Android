@@ -162,7 +162,7 @@
         <ImageButton
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:id="@+id/imageButton6"
+            android:id="@+id/btn_profile"
             android:layout_row="4"
             android:layout_column="1"
             android:background="@drawable/profile"

@@ -28,10 +28,7 @@
         <item>Agriculturist</item>
     </string-array>
     <string name="logging_in_text">Logging In...</string>
-<<<<<<< HEAD
     <string name="signing_up">Signing Up...</string>
-=======
     <string name="invalid_user_text">Invalid Username / Password</string>
     <string name="register_toolbar_title">Register</string>
->>>>>>> 9c85efbe210719171e22ef4190d690832c072e00
 </resources>

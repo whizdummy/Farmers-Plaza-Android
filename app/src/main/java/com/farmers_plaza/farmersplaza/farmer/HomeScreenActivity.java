@@ -3,7 +3,10 @@ package com.farmers_plaza.farmersplaza.farmer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.farmers_plaza.farmersplaza.R;
@@ -24,6 +27,7 @@ public class HomeScreenActivity extends AppCompatActivity {
     private Farmer                              farmer;
     private TextView                            name;
     private TextView                            signOut;
+    private ImageButton                         profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,16 +35,15 @@ public class HomeScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setUp();
         clickSignOut();
+        clickProfile();
     }
 
     public void setUp(){
 
         name = (TextView)findViewById(R.id.text_view_name);
         signOut = (TextView)findViewById(R.id.btnSignOut);
-        ExecutorService es = Executors.newSingleThreadExecutor();
         try {
-            Future<Object> futureFarmer = es.submit(new FarmerService("retrieveFarmer", ParseUser.getCurrentUser()));
-            farmer = (Farmer)futureFarmer.get();
+            farmer = (Farmer)runThread("retrieveFarmer", ParseUser.getCurrentUser()).get();
             name.setText(farmer.getName());
         }catch(Exception e){
             e.printStackTrace();
@@ -56,11 +59,36 @@ public class HomeScreenActivity extends AppCompatActivity {
                 showIntent(MainActivity.class);
             }
         });
+    }//end clickSignOut
+
+    public void clickProfile(){
+        profile = (ImageButton)findViewById(R.id.btn_profile);
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showIntent(FarmerProfileActivity.class);
+            }//end onClick
+        });
     }
 
     private void showIntent(Class className) {
         intent = new Intent(HomeScreenActivity.this, className);
         startActivity(intent);
+        finish();
     }
 
+    private Future<Object> runThread(String methodName, Object param){
+        ExecutorService es = Executors.newSingleThreadExecutor();
+        Future<Object> futureObject = es.submit(new FarmerService(methodName, param));
+        return futureObject;
+    }//end runThread
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK){
+            moveTaskToBack(true);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }//end HomeScreenActivity

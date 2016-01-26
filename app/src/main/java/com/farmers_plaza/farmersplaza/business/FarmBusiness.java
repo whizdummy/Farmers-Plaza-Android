@@ -1,10 +1,15 @@
 package com.farmers_plaza.farmersplaza.business;
 
+import android.location.Address;
 import android.location.Geocoder;
 import android.text.TextUtils;
 
 import com.farmers_plaza.farmersplaza.dal.FarmDao;
+import com.farmers_plaza.farmersplaza.farm.FarmAddActivity;
 import com.farmers_plaza.farmersplaza.models.Farm;
+import com.parse.ParseGeoPoint;
+
+import java.io.IOException;
 
 public class FarmBusiness {
 
@@ -14,7 +19,7 @@ public class FarmBusiness {
         farmDao = new FarmDao();
     }//end FarmBusiness
 
-    public String registerFarm(Farm farm){
+    public String registerFarm(Farm farm, Geocoder geocoder) throws IOException {
         if(isFarmNull(farm)){
             return "error-validation";
         }//end isFarmNull
@@ -24,6 +29,16 @@ public class FarmBusiness {
         if(!farm.getFarmAddress().matches(regExpression)){
             return "error-validation";
         }//end farmAddress
+
+        Address farmAddress = geocoder.getFromLocationName(farm.getFarmAddress(), 1).get(0);
+        if (farmAddress == null){
+            return "error-validation";
+        }//end Address validation
+
+        ParseGeoPoint geoPoint = new ParseGeoPoint();
+        geoPoint.setLatitude(farmAddress.getLatitude());
+        geoPoint.setLongitude(farmAddress.getLongitude());
+        farm.setGeoPoint(geoPoint);
 
         return farmDao.registerFarm(farm);
 

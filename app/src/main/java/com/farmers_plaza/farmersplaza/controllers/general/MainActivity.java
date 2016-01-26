@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                                         showIntent(AgriHomeScreenActivity.class);
                                     }
 
+
                                 }//end if e == null
                                 else {
 
@@ -93,5 +94,6 @@ public class MainActivity extends AppCompatActivity {
     private void showIntent(Class className) {
         intent = new Intent(MainActivity.this, className);
         startActivity(intent);
+        finish();
     }
 }
