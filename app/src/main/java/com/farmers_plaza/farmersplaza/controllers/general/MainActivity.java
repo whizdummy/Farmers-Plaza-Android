@@ -9,7 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.farmers_plaza.farmersplaza.R;
+import com.farmers_plaza.farmersplaza.agriculturist.AgriHomeScreenActivity;
 import com.farmers_plaza.farmersplaza.farmer.HomeScreenActivity;
+import com.farmers_plaza.farmersplaza.models.Person;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -47,13 +49,18 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ParseUser.logInInBackground(username.getText().toString(), password.getText().toString(),
+                Person.logInInBackground(username.getText().toString(), password.getText().toString(),
                         new LogInCallback() {
                             @Override
                             public void done(ParseUser user, ParseException e) {
                                 if (e == null) {
 
-                                    showIntent(HomeScreenActivity.class);
+                                    if (Person.getCurrentUser().getBoolean("isAdmin") == false) {
+                                        showIntent(HomeScreenActivity.class);
+                                    }else{
+                                        //show Agri Home
+                                        showIntent(AgriHomeScreenActivity.class);
+                                    }
 
                                 }//end if e == null
                                 else {

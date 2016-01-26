@@ -18,7 +18,6 @@ public class AgriculturistDao {
             queryAgriculturist.whereEqualTo("firstName", agri.getFirstName());
             queryAgriculturist.whereEqualTo("middleName", agri.getMiddleName());
             queryAgriculturist.whereEqualTo("lastName", agri.getLastName());
-            queryAgriculturist.whereEqualTo("username", agri.getUser());
             if (queryAgriculturist.count() > 0) {
                 return "error-existing";
             }//end if(queryFarmer.count()>0)
@@ -32,7 +31,10 @@ public class AgriculturistDao {
             });
             return "success";
 
-        }catch (Exception e){
+        }catch(ParseException pe){
+            pe.printStackTrace();
+            return "error-existing";
+        }catch(Exception e){
             e.printStackTrace();
         }//try catch
         return "error-database";
