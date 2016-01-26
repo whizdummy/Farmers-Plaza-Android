@@ -1,8 +1,10 @@
 package com.farmers_plaza.farmersplaza.controllers.general;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,8 +15,6 @@ import com.farmers_plaza.farmersplaza.R;
 import com.farmers_plaza.farmersplaza.agriculturist.AgriHomeScreenActivity;
 import com.farmers_plaza.farmersplaza.business.AgriculturistBusiness;
 import com.farmers_plaza.farmersplaza.business.FarmerBusiness;
-import com.farmers_plaza.farmersplaza.dal.AgriculturistDao;
-import com.farmers_plaza.farmersplaza.dal.FarmerDao;
 import com.farmers_plaza.farmersplaza.farmer.HomeScreenActivity;
 import com.farmers_plaza.farmersplaza.models.Agriculturist;
 import com.farmers_plaza.farmersplaza.models.Farmer;
@@ -22,6 +22,7 @@ import com.farmers_plaza.farmersplaza.models.Person;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -38,30 +39,46 @@ public class RegistrationActivity extends AppCompatActivity {
     Button                  btnRegister;
     Person                  person;
     Intent                  intent;
+    Toolbar                 toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         setUp();
+        setUpToolbar();
         clickBtnRegister();
     }//end onCreate()
 
     public void setUp(){
 
-        firstName = (EditText)findViewById(R.id.edit_text_fname);
-        middleName = (EditText)findViewById(R.id.edit_text_mname);
-        lastName = (EditText)findViewById(R.id.edit_text_lname);
-        phoneNo = (EditText)findViewById(R.id.edit_text_phone_num);
-        address = (EditText)findViewById(R.id.edit_text_address);
-        email = (EditText)findViewById(R.id.edit_text_email);
-        username = (EditText)findViewById(R.id.edit_text_username);
-        password = (EditText)findViewById(R.id.edit_text_password);
-        retype = (EditText)findViewById(R.id.edit_text_confirm_pass);
-        userType = (Spinner)findViewById(R.id.spinner_user_type);
-        btnRegister = (Button)findViewById(R.id.btn_register);
+        firstName = (EditText) findViewById(R.id.edit_text_fname);
+        middleName = (EditText) findViewById(R.id.edit_text_mname);
+        lastName = (EditText) findViewById(R.id.edit_text_lname);
+        phoneNo = (EditText) findViewById(R.id.edit_text_phone_num);
+        address = (EditText) findViewById(R.id.edit_text_address);
+        email = (EditText) findViewById(R.id.edit_text_email);
+        username = (EditText) findViewById(R.id.edit_text_username);
+        password = (EditText) findViewById(R.id.edit_text_password);
+        retype = (EditText) findViewById(R.id.edit_text_confirm_pass);
+        userType = (Spinner) findViewById(R.id.spinner_user_type);
+        btnRegister = (Button) findViewById(R.id.btn_register);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
     }//end public void setUp()
+
+    private void setUpToolbar() {
+        toolbar.setTitle(getString(R.string.register_toolbar_title));
+        toolbar.setTitleTextColor(Color.WHITE);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
 
     public void clickBtnRegister(){
 
@@ -83,35 +100,37 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 }//end else
 
-                if (strStatus.equals("success")){
+                switch (strStatus) {
+                    case "success":
 
-                    //display success view
-                    if (ParseUser.getCurrentUser().getBoolean("isAdmin") == false) {
-                        showIntent(HomeScreenActivity.class);
-                    }else{
-                        //show Agri Home
-                        showIntent(AgriHomeScreenActivity.class);
-                    }
+                        //display success view
+                        if (!ParseUser.getCurrentUser().getBoolean("isAdmin")) {
+                            showIntent(HomeScreenActivity.class);
+                        } else {
+                            //show Agri Home
+                            showIntent(AgriHomeScreenActivity.class);
+                        }
 
-                }//end if success
-                else if (strStatus.equals("error-database")){
+                        break;
+                    case "error-database":
 
-                    //display error-database
-                    Log.e("TAG", "ERROR-DATABASE");
+                        //display error-database
+                        Log.e("TAG", "ERROR-DATABASE");
 
-                }//end else if error-database
-                else if (strStatus.equals("error-existing")){
+                        break;
+                    case "error-existing":
 
-                    //display error-existing
-                    Log.e("TAG", "ERROR-EXISTING");
+                        //display error-existing
+                        Log.e("TAG", "ERROR-EXISTING");
 
-                }//end else if error-existing
-                else if (strStatus.equals("error-validate")){
+                        break;
+                    case "error-validate":
 
-                    //display error-validate
-                    Log.e("TAG", "ERROR-VALIDATE");
+                        //display error-validate
+                        Log.e("TAG", "ERROR-VALIDATE");
 
-                }//end else if error-validate
+                        break;
+                }
 
             }//end onClick
         });
