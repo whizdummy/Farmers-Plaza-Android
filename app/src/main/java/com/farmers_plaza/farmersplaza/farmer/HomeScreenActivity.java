@@ -44,10 +44,10 @@ public class HomeScreenActivity extends AppCompatActivity {
         signOut = (TextView)findViewById(R.id.btnSignOut);
         try {
             farmer = (Farmer)runThread("retrieveFarmer", ParseUser.getCurrentUser()).get();
-            name.setText(farmer.getName());
         }catch(Exception e){
             e.printStackTrace();
         }//try catch
+        name.setText(farmer.getName());
 
     }//end setUp
 

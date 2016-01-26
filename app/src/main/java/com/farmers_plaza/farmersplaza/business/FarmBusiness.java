@@ -45,7 +45,7 @@ public class FarmBusiness {
 
         Address farmAddress = geocoder.getFromLocationName(farm.getFarmAddress(), 1).get(0);
         if (farmAddress == null){
-            return "error-validation";
+            return "error-location-not-found";
         }//end Address validation
 
         ParseGeoPoint geoPoint = new ParseGeoPoint();
