@@ -11,13 +11,17 @@ import com.farmers_plaza.farmersplaza.controllers.general.MainActivity;
 import com.farmers_plaza.farmersplaza.dal.FarmerDao;
 import com.farmers_plaza.farmersplaza.models.Farmer;
 import com.farmers_plaza.farmersplaza.models.Person;
+import com.farmers_plaza.farmersplaza.service.FarmerService;
 import com.parse.ParseUser;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class HomeScreenActivity extends AppCompatActivity {
 
     private Intent                              intent;
     private Farmer                              farmer;
-    private FarmerDao                           farmerDao;
     private TextView                            name;
     private TextView                            signOut;
 
@@ -31,11 +35,16 @@ public class HomeScreenActivity extends AppCompatActivity {
 
     public void setUp(){
 
-        farmerDao = new FarmerDao();
-        farmer = farmerDao.retrieveFarmer(ParseUser.getCurrentUser());
         name = (TextView)findViewById(R.id.text_view_name);
-        name.setText(farmer.getName());
         signOut = (TextView)findViewById(R.id.btnSignOut);
+        ExecutorService es = Executors.newSingleThreadExecutor();
+        try {
+            Future<Object> futureFarmer = es.submit(new FarmerService("retrieveFarmer", ParseUser.getCurrentUser()));
+            farmer = (Farmer)futureFarmer.get();
+            name.setText(farmer.getName());
+        }catch(Exception e){
+            e.printStackTrace();
+        }//try catch
 
     }//end setUp
 

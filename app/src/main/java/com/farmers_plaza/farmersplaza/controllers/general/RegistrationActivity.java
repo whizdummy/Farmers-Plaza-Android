@@ -19,9 +19,16 @@ import com.farmers_plaza.farmersplaza.farmer.HomeScreenActivity;
 import com.farmers_plaza.farmersplaza.models.Agriculturist;
 import com.farmers_plaza.farmersplaza.models.Farmer;
 import com.farmers_plaza.farmersplaza.models.Person;
+import com.farmers_plaza.farmersplaza.service.FarmerService;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -38,6 +45,7 @@ public class RegistrationActivity extends AppCompatActivity {
     Button                  btnRegister;
     Person                  person;
     Intent                  intent;
+    ProgressDialogPrompt    progressDialogPrompt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +68,7 @@ public class RegistrationActivity extends AppCompatActivity {
         retype = (EditText)findViewById(R.id.edit_text_confirm_pass);
         userType = (Spinner)findViewById(R.id.spinner_user_type);
         btnRegister = (Button)findViewById(R.id.btn_register);
+        progressDialogPrompt = new ProgressDialogPrompt(this);
 
     }//end public void setUp()
 
@@ -70,48 +79,57 @@ public class RegistrationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 getData();
                 String strStatus;
-                if (userType.getSelectedItem().toString().equals("Farmer")){
+                ExecutorService es = Executors.newSingleThreadExecutor();
+                progressDialogPrompt.showProgress(getString(R.string.signing_up));
+                try {
+                    if (userType.getSelectedItem().toString().equals("Farmer")) {
 
-                    FarmerBusiness farmerBusiness = new FarmerBusiness();
-                    strStatus = farmerBusiness.validateFarmer((Farmer) person);
+                        Future<Object> futureObject = es.submit(new FarmerService("registerFarmer", person));
+                        strStatus = futureObject.get().toString();
+                        progressDialogPrompt.stopProgress();
 
-                }//end if
-                else{
+                    }//end if
+                    else {
 
-                    AgriculturistBusiness agriculturistBusiness = new AgriculturistBusiness();
-                    strStatus = agriculturistBusiness.validateAgriculturist((Agriculturist)person);
+                        AgriculturistBusiness agriculturistBusiness = new AgriculturistBusiness();
+                        strStatus = agriculturistBusiness.validateAgriculturist((Agriculturist) person);
+                        progressDialogPrompt.stopProgress();
 
-                }//end else
+                    }//end else
+                    if (strStatus.equals("success")) {
 
-                if (strStatus.equals("success")){
+                        //display success view
+                        if (ParseUser.getCurrentUser().getBoolean("isAdmin") == false) {
+                            showIntent(HomeScreenActivity.class);
+                        } else {
+                            //show Agri Home
+                            showIntent(AgriHomeScreenActivity.class);
+                        }
 
-                    //display success view
-                    if (ParseUser.getCurrentUser().getBoolean("isAdmin") == false) {
-                        showIntent(HomeScreenActivity.class);
-                    }else{
-                        //show Agri Home
-                        showIntent(AgriHomeScreenActivity.class);
-                    }
+                    }//end if success
+                    else if (strStatus.equals("error-database")) {
 
-                }//end if success
-                else if (strStatus.equals("error-database")){
+                        //display error-database
+                        Log.e("TAG", "ERROR-DATABASE");
 
-                    //display error-database
-                    Log.e("TAG", "ERROR-DATABASE");
+                    }//end else if error-database
+                    else if (strStatus.equals("error-existing")) {
 
-                }//end else if error-database
-                else if (strStatus.equals("error-existing")){
+                        //display error-existing
+                        Log.e("TAG", "ERROR-EXISTING");
 
-                    //display error-existing
-                    Log.e("TAG", "ERROR-EXISTING");
+                    }//end else if error-existing
+                    else if (strStatus.equals("error-validate")) {
 
-                }//end else if error-existing
-                else if (strStatus.equals("error-validate")){
+                        //display error-validate
+                        Log.e("TAG", "ERROR-VALIDATE");
 
-                    //display error-validate
-                    Log.e("TAG", "ERROR-VALIDATE");
-
-                }//end else if error-validate
+                    }//end else if error-validate
+                }catch(InterruptedException e){
+                    e.printStackTrace();
+                }catch(ExecutionException e){
+                    e.printStackTrace();
+                }
 
             }//end onClick
         });
@@ -148,14 +166,6 @@ public class RegistrationActivity extends AppCompatActivity {
             person.setPhoneNo(phoneNo.getText().toString());
 
         }//end else if (userType.getSelectedItem().toString().equals("Agriculturist"))
-        user.signUpInBackground(new SignUpCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e!=null){
-                    Log.e("TAG", e.getMessage());
-                }
-            }
-        });
 
     }//end getData()
 
