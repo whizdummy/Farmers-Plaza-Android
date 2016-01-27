@@ -20,4 +20,6 @@
     <string name="signUpText">SIGN UP</string>
     <string name="forgot_pass_text">Forgot Password?</string>
     <string name="title_activity_farm_location">Map</string>
+    <string name="profile_text">Profile</string>
+    <string name="logout_text">LOG OUT</string>
 </resources>

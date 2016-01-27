@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="REGISTER"
+                android:text="@string/register_text"
                 android:id="@+id/textView"
                 android:textColor="#30542c"
                 android:layout_gravity="center_horizontal" />
