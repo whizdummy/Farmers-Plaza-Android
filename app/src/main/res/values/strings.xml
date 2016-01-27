@@ -38,6 +38,7 @@
     <string name="browse_crops_toolbar_title">Browse Crops</string>
     <string name="soil_testing_toolbar_title">Soil Testing</string>
     <string name="income_toolbar_title">Income</string>
+    <string name="add_farm_toolbar_title">Add Farm</string>
     <string name="change_image_button">Change Image</string>
     <string-array name="image_dialog_options">
         <item>Take a Photo</item>

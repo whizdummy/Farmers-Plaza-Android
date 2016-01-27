@@ -69,6 +69,10 @@
             android:name=".farmer.FarmLocationActivity"
             android:label="@string/title_activity_farm_location" />
         <activity
+            android:name=".farmer.AddFarmActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".farmer.FarmBrowseActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -80,7 +84,9 @@
         <activity
             android:name=".agriculturist.AgriProfileActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".agriculturist.SoilAnalysisActivity"></activity>
+        <activity
+            android:name=".agriculturist.SoilAnalysisActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
