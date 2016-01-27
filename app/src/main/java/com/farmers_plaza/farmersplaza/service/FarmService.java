@@ -31,6 +31,12 @@ public class FarmService implements Callable{
 
     }
 
+    public FarmService(String strThreadMethod){
+        this.strThreadMethod = strThreadMethod;
+        farmBusiness = new FarmBusiness();
+        farmDao = new FarmDao();
+    }
+
     public FarmService(String strThreadMethod, Object object, Geocoder geocoder){
 
         this.strThreadMethod = strThreadMethod;

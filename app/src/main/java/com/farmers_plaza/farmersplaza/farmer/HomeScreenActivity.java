@@ -28,6 +28,7 @@ public class HomeScreenActivity extends AppCompatActivity {
     private TextView                            name;
     private TextView                            signOut;
     private ImageButton                         profile;
+    private ImageButton                         browseFarm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         setUp();
         clickSignOut();
         clickProfile();
+        clickBrowseFarm();
     }
 
     public void setUp(){
@@ -69,6 +71,17 @@ public class HomeScreenActivity extends AppCompatActivity {
                 showIntent(FarmerProfileActivity.class);
             }//end onClick
         });
+    }
+
+    public void clickBrowseFarm(){
+        browseFarm = (ImageButton)findViewById(R.id.btnBrowseFarm);
+        browseFarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showIntent(FarmActivity.class);
+            }
+        });
+
     }
 
     private void showIntent(Class className) {
