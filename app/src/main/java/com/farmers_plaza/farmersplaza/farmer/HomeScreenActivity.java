@@ -41,6 +41,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         clickFarm();
         clickSignOut();
         clickProfile();
+        clickBrowseFarm();
     }
 
     private void clickMap() {
@@ -114,6 +115,17 @@ public class HomeScreenActivity extends AppCompatActivity {
                 showIntent(FarmerProfileActivity.class);
             }//end onClick
         });
+    }
+
+    public void clickBrowseFarm(){
+        imgBtnCrops = (ImageButton)findViewById(R.id.btnBrowseFarm);
+        imgBtnCrops.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showIntent(FarmActivity.class);
+            }
+        });
+
     }
 
     private void showIntent(Class className) {
