@@ -62,7 +62,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="AIzaSyC4VtKFM4PCyeuUt6gLLcnb7OAJGJaWqfQ" />
 
         <activity
             android:name=".farmer.HomeScreenActivity"
@@ -71,6 +71,14 @@
         <activity
             android:name=".farmer.FarmLocationActivity"
             android:label="@string/title_activity_farm_location" />
+
+        <activity
+            android:name=".farmer.FarmBrowseActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".farmer.CropBrowseActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

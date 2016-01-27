@@ -37,7 +37,9 @@ public class AgriculturistDao {
             if (queryAgriculturist.count() > 0) {
                 return "error-existing";
             }//end if(queryFarmer.count()>0)
+            agri.getUser().signUp();
             agri.save();
+            Log.e("SAVE", "Save me!!!");
             return "success";
 
         }catch(ParseException pe){

@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.farmers_plaza.farmersplaza.R;
 import com.farmers_plaza.farmersplaza.agriculturist.AgriHomeScreenActivity;
+import com.farmers_plaza.farmersplaza.business.GeneralBusiness;
 import com.farmers_plaza.farmersplaza.farmer.HomeScreenActivity;
 import com.farmers_plaza.farmersplaza.models.Person;
 import com.parse.LogInCallback;

@@ -6,27 +6,19 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.farmers_plaza.farmersplaza.R;
 import com.farmers_plaza.farmersplaza.controllers.general.ToolbarSetup;
-import com.github.mikephil.charting.charts.LineChart;
 
-public class IncomeActivity extends AppCompatActivity {
-    LineChart lineChart;
+public class FarmBrowseActivity extends AppCompatActivity {
     ToolbarSetup toolbarSetup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_income);
-        setUp();
-        setUpToolbar();
+        setContentView(R.layout.activity_browse_farms);
+        setupToolbar();
     }
 
-    private void setUpToolbar() {
+    private void setupToolbar() {
         toolbarSetup = new ToolbarSetup(findViewById(R.id.toolbar), this, this);
-        toolbarSetup.initialize(getString(R.string.income_toolbar_title), Color.WHITE);
-    }
-
-    private void setUp() {
-       lineChart = (LineChart) findViewById(R.id.line_chart_income);
-//        May mga lalagay pa rito
+        toolbarSetup.initialize(getString(R.string.browse_farm_toolbar_title), Color.WHITE);
     }
 }

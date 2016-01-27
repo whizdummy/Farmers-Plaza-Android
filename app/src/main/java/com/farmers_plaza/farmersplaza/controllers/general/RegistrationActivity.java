@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +12,6 @@ import android.widget.Spinner;
 
 import com.farmers_plaza.farmersplaza.R;
 import com.farmers_plaza.farmersplaza.agriculturist.AgriHomeScreenActivity;
-import com.farmers_plaza.farmersplaza.business.AgriculturistBusiness;
 import com.farmers_plaza.farmersplaza.farmer.HomeScreenActivity;
 import com.farmers_plaza.farmersplaza.models.Agriculturist;
 import com.farmers_plaza.farmersplaza.models.Farmer;
@@ -43,7 +41,7 @@ public class RegistrationActivity extends AppCompatActivity {
     Person                  person;
     Intent                  intent;
     ProgressDialogPrompt    progressDialogPrompt;
-    Toolbar                 toolbar;
+    ToolbarSetup            toolbarSetup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,21 +66,12 @@ public class RegistrationActivity extends AppCompatActivity {
         retype = (EditText) findViewById(R.id.edit_text_confirm_pass);
         userType = (Spinner) findViewById(R.id.spinner_user_type);
         btnRegister = (Button) findViewById(R.id.btn_register);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
     }//end public void setUp()
 
     private void setUpToolbar() {
-        toolbar.setTitle(getString(R.string.register_toolbar_title));
-        toolbar.setTitleTextColor(Color.WHITE);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbarSetup = new ToolbarSetup(findViewById(R.id.toolbar), this, this);
+        toolbarSetup.initialize(getString(R.string.register_toolbar_title), Color.WHITE);
     }
 
     public void clickBtnRegister(){
