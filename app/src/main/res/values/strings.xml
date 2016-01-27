@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Farmers Plaza</string>
+    <string name="app_logo">Farm 2D Logo</string>
     <string name="first_name_text">First Name</string>
     <string name="middle_name_text">Middle Name</string>
     <string name="last_name_text">Last Name</string>
@@ -20,6 +21,13 @@
     <string name="signUpText">SIGN UP</string>
     <string name="forgot_pass_text">Forgot Password?</string>
     <string name="title_activity_farm_location">Map</string>
+<<<<<<< HEAD
     <string name="profile_text">Profile</string>
     <string name="logout_text">LOG OUT</string>
+=======
+    <string-array name="user_type">
+        <item>Farmer</item>
+        <item>Agriculturist</item>
+    </string-array>
+>>>>>>> 2c68e36b434306c1d29cd6a0e3b5fb409dd9d541
 </resources>

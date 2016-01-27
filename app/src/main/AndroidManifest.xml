@@ -28,7 +28,9 @@
             android:name="com.parse.CLIENT_KEY"
             android:value="weBWo3u99cyU2aP61hW1klpF4tV6wStIPoxqBUte" />
 
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".controllers.general.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,10 +39,7 @@
         </activity>
         <activity
             android:name=".controllers.general.RegistrationActivity"
-            android:screenOrientation="portrait"
-            android:label="Register!"/>
-        <activity
-            android:name=".controllers.general.LoginActivity"
+            android:label="Register!"
             android:screenOrientation="portrait" />
         <activity
             android:name=".farmer.IncomeActivity"
@@ -56,6 +55,10 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".farmer.HomeScreenActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".farmer.FarmLocationActivity"

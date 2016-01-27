@@ -1,5 +1,6 @@
 package com.farmers_plaza.farmersplaza.controllers.general;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,8 +9,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.farmers_plaza.farmersplaza.R;
+import com.farmers_plaza.farmersplaza.business.AgriculturistBusiness;
+import com.farmers_plaza.farmersplaza.business.FarmerBusiness;
 import com.farmers_plaza.farmersplaza.dal.AgriculturistDao;
 import com.farmers_plaza.farmersplaza.dal.FarmerDao;
+import com.farmers_plaza.farmersplaza.farmer.HomeScreenActivity;
 import com.farmers_plaza.farmersplaza.models.Agriculturist;
 import com.farmers_plaza.farmersplaza.models.Farmer;
 import com.farmers_plaza.farmersplaza.models.Person;
@@ -29,6 +33,7 @@ public class RegistrationActivity extends AppCompatActivity {
     Spinner                 userType;
     Button                  btnRegister;
     Person                  person;
+    Intent                  intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,20 +68,21 @@ public class RegistrationActivity extends AppCompatActivity {
                 String strStatus;
                 if (userType.getSelectedItem().toString().equals("Farmer")){
 
-                    FarmerDao farmerDao = new FarmerDao();
-                    strStatus = farmerDao.registerFarmer((Farmer)person);
+                    FarmerBusiness farmerBusiness = new FarmerBusiness();
+                    strStatus = farmerBusiness.validateFarmer((Farmer) person);
 
                 }//end if
                 else{
 
-                    AgriculturistDao agriculturistDao = new AgriculturistDao();
-                    strStatus = agriculturistDao.registerAgriculturist((Agriculturist)person);
+                    AgriculturistBusiness agriculturistBusiness = new AgriculturistBusiness();
+                    strStatus = agriculturistBusiness.validateAgriculturist((Agriculturist)person);
 
                 }//end else
 
                 if (strStatus.equals("success")){
 
                     //display success view
+                    showIntent(HomeScreenActivity.class);
 
                 }//end if success
                 else if (strStatus.equals("error-database")){
@@ -89,6 +95,11 @@ public class RegistrationActivity extends AppCompatActivity {
                     //display error-existing
 
                 }//end else if error-existing
+                else if (strStatus.equals("error-validate")){
+
+                    //display error-validate
+
+                }//end else if error-validate
 
             }//end onClick
         });
@@ -127,5 +138,10 @@ public class RegistrationActivity extends AppCompatActivity {
         }//end else if (userType.getSelectedItem().toString().equals("Agriculturist"))
 
     }//end getData()
+
+    private void showIntent(Class className) {
+        intent = new Intent(RegistrationActivity.this, className);
+        startActivity(intent);
+    }
 
 }//end RegistrationActivity
