@@ -15,8 +15,6 @@ import com.parse.SignUpCallback;
 import bolts.Task;
 
 public class FarmerDao extends Thread{
-    private static String strStatus = null;
-    private static Farmer farmer;
 
     public Farmer retrieveFarmer(ParseUser user){
 
@@ -42,8 +40,7 @@ public class FarmerDao extends Thread{
             queryFarmer.whereEqualTo("middleName", farmer.getMiddleName());
             queryFarmer.whereEqualTo("lastName", farmer.getLastName());
             if (queryFarmer.count() > 0){
-//                return "error-existing";
-                strStatus = "error-existing";
+                return "error-existing";
             }//end if(queryFarmer.count()>0)
             farmer.getUser().signUp();
             farmer.save();

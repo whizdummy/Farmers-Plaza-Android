@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 
-import com.farmers_plaza.farmersplaza.business.FarmerBusiness;
 import com.farmers_plaza.farmersplaza.farmer.HomeScreenActivity;
 import com.farmers_plaza.farmersplaza.service.FarmService;
 import com.farmers_plaza.farmersplaza.service.FarmerService;
@@ -14,10 +13,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public class FarmAddActivity extends AppCompatActivity{
-
-    private FarmService                         farmService;
-    private Intent                              intent;
+public class FarmAddActivity extends AppCompatActivity {
+    FarmService                         farmService;
+    Intent                              intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

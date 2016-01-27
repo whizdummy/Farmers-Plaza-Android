@@ -33,4 +33,8 @@
     <string name="signing_up">Signing Up...</string>
     <string name="invalid_user_text">Invalid Username / Password</string>
     <string name="register_toolbar_title">Register</string>
+    <string name="profile_toolbar_title">Profile</string>
+    <string name="browse_farm_toolbar_title">Browse Farm</string>
+    <string name="browse_crops_toolbar_title">Browse Crops</string>
+    <string name="income_toolbar_title">Income</string>
 </resources>

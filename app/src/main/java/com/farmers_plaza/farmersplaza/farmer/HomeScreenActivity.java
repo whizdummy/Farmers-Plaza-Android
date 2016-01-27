@@ -5,15 +5,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.farmers_plaza.farmersplaza.R;
 import com.farmers_plaza.farmersplaza.controllers.general.MainActivity;
-import com.farmers_plaza.farmersplaza.dal.FarmerDao;
 import com.farmers_plaza.farmersplaza.models.Farmer;
-import com.farmers_plaza.farmersplaza.models.Person;
 import com.farmers_plaza.farmersplaza.service.FarmerService;
 import com.parse.ParseUser;
 
@@ -23,36 +20,84 @@ import java.util.concurrent.Future;
 
 public class HomeScreenActivity extends AppCompatActivity {
 
-    private Intent                              intent;
-    private Farmer                              farmer;
-    private TextView                            name;
-    private TextView                            signOut;
-    private ImageButton                         profile;
+    private Farmer                      farmer;
+    private Intent                      intent;
+    private TextView                    txtViewName;
+    private TextView                    txtViewSignOut;
+    private ImageButton                 imgBtnMap;
+    private ImageButton                 imgBtnCrops;
+    private ImageButton                 imgBtnIncome;
+    private ImageButton                 imgBtnFarm;
+    private ImageButton                 imgBtnProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_farm_main);
         setUp();
+        clickMap();
+        clickCrops();
+        clickIncome();
+        clickFarm();
         clickSignOut();
         clickProfile();
     }
 
-    public void setUp(){
+    private void clickMap() {
+        imgBtnMap = (ImageButton) findViewById(R.id.img_btn_maps);
+        imgBtnMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showIntent(FarmLocationActivity.class);
+            }
+        });
+    }
 
-        name = (TextView)findViewById(R.id.text_view_name);
-        signOut = (TextView)findViewById(R.id.btnSignOut);
+    private void clickIncome() {
+        imgBtnIncome = (ImageButton) findViewById(R.id.img_btn_income);
+        imgBtnIncome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showIntent(IncomeActivity.class);
+            }
+        });
+    }
+
+    private void clickCrops() {
+        imgBtnCrops = (ImageButton) findViewById(R.id.img_btn_crops);
+        imgBtnCrops.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showIntent(CropBrowseActivity.class);
+            }
+        });
+    }
+
+    public void setUp() {
+        txtViewName = (TextView)findViewById(R.id.text_view_name_farmer);
+
         try {
             farmer = (Farmer)runThread("retrieveFarmer", ParseUser.getCurrentUser()).get();
         }catch(Exception e){
             e.printStackTrace();
         }//try catch
-        name.setText(farmer.getName());
-
+        txtViewName.setText(farmer.getName());
     }//end setUp
 
-    public void clickSignOut(){
-        signOut.setOnClickListener(new View.OnClickListener() {
+    private void clickFarm() {
+        imgBtnFarm = (ImageButton) findViewById(R.id.img_btn_farm);
+        imgBtnFarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showIntent(FarmBrowseActivity.class);
+            }
+        });
+    } // end clickFarm
+
+    public void clickSignOut() {
+        txtViewSignOut = (TextView)findViewById(R.id.btnSignOut);
+
+        txtViewSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ParseUser.logOut();
@@ -62,8 +107,8 @@ public class HomeScreenActivity extends AppCompatActivity {
     }//end clickSignOut
 
     public void clickProfile(){
-        profile = (ImageButton)findViewById(R.id.btn_profile);
-        profile.setOnClickListener(new View.OnClickListener() {
+        imgBtnProfile = (ImageButton)findViewById(R.id.img_btn_profile);
+        imgBtnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showIntent(FarmerProfileActivity.class);
