@@ -3,12 +3,14 @@ package com.farmers_plaza.farmersplaza.controllers.general;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.farmers_plaza.farmersplaza.R;
+import com.farmers_plaza.farmersplaza.agriculturist.AgriHomeScreenActivity;
 import com.farmers_plaza.farmersplaza.business.AgriculturistBusiness;
 import com.farmers_plaza.farmersplaza.business.FarmerBusiness;
 import com.farmers_plaza.farmersplaza.dal.AgriculturistDao;
@@ -82,22 +84,30 @@ public class RegistrationActivity extends AppCompatActivity {
                 if (strStatus.equals("success")){
 
                     //display success view
-                    showIntent(HomeScreenActivity.class);
+                    if (Person.getCurrentUser().getBoolean("isAdmin") == false) {
+                        showIntent(HomeScreenActivity.class);
+                    }else{
+                        //show Agri Home
+                        showIntent(AgriHomeScreenActivity.class);
+                    }
 
                 }//end if success
                 else if (strStatus.equals("error-database")){
 
                     //display error-database
+                    Log.e("TAG", "ERROR-DATABASE");
 
                 }//end else if error-database
                 else if (strStatus.equals("error-existing")){
 
                     //display error-existing
+                    Log.e("TAG", "ERROR-EXISTING");
 
                 }//end else if error-existing
                 else if (strStatus.equals("error-validate")){
 
                     //display error-validate
+                    Log.e("TAG", "ERROR-VALIDATE");
 
                 }//end else if error-validate
 
@@ -109,14 +119,13 @@ public class RegistrationActivity extends AppCompatActivity {
     public void getData(){
 
         ParseUser user = new ParseUser();
-        user.setEmail(email.getText().toString());
-        user.setUsername(username.getText().toString());
-        user.setPassword(password.getText().toString());
         if (userType.getSelectedItem().toString().equals("Farmer")){
 
-            user.put("isAdmin", false);
             person = new Farmer();
-            person.setUser(user);
+            person.setIsAdmin(false);
+            person.setEmail(email.getText().toString());
+            person.setUsername(username.getText().toString());
+            person.setPassword(password.getText().toString());
             person.setFirstName(firstName.getText().toString());
             person.setMiddleName(middleName.getText().toString());
             person.setLastName(lastName.getText().toString());
@@ -126,9 +135,11 @@ public class RegistrationActivity extends AppCompatActivity {
         }//end if (userType.getSelectedItem().toString().equals("Farmer"))
         else if (userType.getSelectedItem().toString().equals("Agriculturist")) {
 
-            user.put("isAdmin", true);
             person = new Agriculturist();
-            person.setUser(user);
+            person.setIsAdmin(true);
+            person.setEmail(email.getText().toString());
+            person.setUsername(username.getText().toString());
+            person.setPassword(password.getText().toString());
             person.setFirstName(firstName.getText().toString());
             person.setMiddleName(middleName.getText().toString());
             person.setLastName(lastName.getText().toString());
