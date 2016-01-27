@@ -3,7 +3,7 @@ package com.farmers_plaza.farmersplaza.business;
 import com.farmers_plaza.farmersplaza.dal.FarmerDao;
 import com.farmers_plaza.farmersplaza.models.Farmer;
 
-public class FarmerBusiness {
+public class FarmerBusiness extends Thread{
 
     private FarmerDao farmerDao;
 

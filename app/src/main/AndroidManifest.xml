@@ -23,10 +23,10 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.parse.APPLICATION_ID"
-            android:value="hbt4JEmtcJ2wBYSL289AgeMcN1KtruvUpZkm81l7" />
+            android:value="Zx5nOBNT55zZIMv3dvMg29a0r3un1zae5hET9FBw" />
         <meta-data
             android:name="com.parse.CLIENT_KEY"
-            android:value="weBWo3u99cyU2aP61hW1klpF4tV6wStIPoxqBUte" />
+            android:value="sZMQtbybdPQDIrOfdDJbRUHgM1T6Xv246JMBFFgP" />
 
         <activity
             android:name=".controllers.general.MainActivity"
