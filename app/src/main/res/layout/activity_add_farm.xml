@@ -12,6 +12,60 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="10dp"></LinearLayout>
+        android:layout_margin="20dp"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Add a Farm"
+            android:id="@+id/textView2"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/colorPrimary" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtFarmName"
+            android:hint="Farm Name" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:id="@+id/txtFarmSize"
+            android:layout_gravity="center_horizontal"
+            android:hint="Farm Size" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/txtFarmAddress"
+            android:layout_gravity="right"
+            android:hint="Farm Address" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtFarmGeo"
+            android:layout_gravity="center_horizontal"
+            android:hint="Geological Point"
+            android:editable="false" />
+
+        <Button
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:text="SUBMIT"
+            android:id="@+id/btnSubmit"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#ffffff"
+            android:background="@color/colorPrimary"
+            android:textSize="18dp"
+            android:layout_marginTop="20dp" />
+    </LinearLayout>
 
 </LinearLayout>
