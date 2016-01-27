@@ -75,6 +75,14 @@
         <activity
             android:name=".farmer.CropBrowseActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".agriculturist.AgriHomeScreenActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".agriculturist.AgriProfileActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

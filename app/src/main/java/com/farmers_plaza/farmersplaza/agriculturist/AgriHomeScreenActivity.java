@@ -1,11 +1,13 @@
 package com.farmers_plaza.farmersplaza.agriculturist;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.farmers_plaza.farmersplaza.R;
@@ -27,13 +29,37 @@ public class AgriHomeScreenActivity  extends AppCompatActivity{
     private TextView                                    name;
     private AgriculturistDao                            agriculturistDao;
     private Button                                      signOut;
+    private ImageButton                                 imgBtnSoilTester;
+    private ImageButton                                 imgBtnProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agri_main);
         setUp();
+        clickSoilTester();
+        clickProfile();
         clickSignOut();
+    }
+
+    private void clickSoilTester() {
+        imgBtnSoilTester = (ImageButton) findViewById(R.id.img_btn_soil_tester);
+        imgBtnSoilTester.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                showIntent();
+            }
+        });
+    }
+
+    private void clickProfile() {
+        imgBtnProfile = (ImageButton) findViewById(R.id.img_btn_profile_agri);
+        imgBtnProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showIntent(AgriProfileActivity.class);
+            }
+        });
     }
 
     public void setUp(){
@@ -64,7 +90,7 @@ public class AgriHomeScreenActivity  extends AppCompatActivity{
     private void showIntent(Class className) {
         intent = new Intent(AgriHomeScreenActivity.this, className);
         startActivity(intent);
-        finish();
+//        finish();
     }
 
     @Override
