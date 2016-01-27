@@ -1,8 +1,10 @@
 package com.farmers_plaza.farmersplaza.controllers.general;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,16 +14,18 @@ import android.widget.Spinner;
 import com.farmers_plaza.farmersplaza.R;
 import com.farmers_plaza.farmersplaza.agriculturist.AgriHomeScreenActivity;
 import com.farmers_plaza.farmersplaza.business.AgriculturistBusiness;
-import com.farmers_plaza.farmersplaza.business.FarmerBusiness;
-import com.farmers_plaza.farmersplaza.dal.AgriculturistDao;
-import com.farmers_plaza.farmersplaza.dal.FarmerDao;
 import com.farmers_plaza.farmersplaza.farmer.HomeScreenActivity;
 import com.farmers_plaza.farmersplaza.models.Agriculturist;
 import com.farmers_plaza.farmersplaza.models.Farmer;
 import com.farmers_plaza.farmersplaza.models.Person;
-import com.parse.ParseException;
+import com.farmers_plaza.farmersplaza.service.AgriculturistService;
+import com.farmers_plaza.farmersplaza.service.FarmerService;
 import com.parse.ParseUser;
-import com.parse.SignUpCallback;
+
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -38,30 +42,48 @@ public class RegistrationActivity extends AppCompatActivity {
     Button                  btnRegister;
     Person                  person;
     Intent                  intent;
+    ProgressDialogPrompt    progressDialogPrompt;
+    Toolbar                 toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         setUp();
+        setUpToolbar();
         clickBtnRegister();
     }//end onCreate()
 
     public void setUp(){
 
-        firstName = (EditText)findViewById(R.id.edit_text_fname);
-        middleName = (EditText)findViewById(R.id.edit_text_mname);
-        lastName = (EditText)findViewById(R.id.edit_text_lname);
-        phoneNo = (EditText)findViewById(R.id.edit_text_phone_num);
-        address = (EditText)findViewById(R.id.edit_text_address);
-        email = (EditText)findViewById(R.id.edit_text_email);
-        username = (EditText)findViewById(R.id.edit_text_username);
-        password = (EditText)findViewById(R.id.edit_text_password);
-        retype = (EditText)findViewById(R.id.edit_text_confirm_pass);
-        userType = (Spinner)findViewById(R.id.spinner_user_type);
-        btnRegister = (Button)findViewById(R.id.btn_register);
+        progressDialogPrompt = new ProgressDialogPrompt(this);
+        firstName = (EditText) findViewById(R.id.edit_text_fname);
+        middleName = (EditText) findViewById(R.id.edit_text_mname);
+        lastName = (EditText) findViewById(R.id.edit_text_lname);
+        phoneNo = (EditText) findViewById(R.id.edit_text_phone_num);
+        address = (EditText) findViewById(R.id.edit_text_address);
+        email = (EditText) findViewById(R.id.edit_text_email);
+        username = (EditText) findViewById(R.id.edit_text_username);
+        password = (EditText) findViewById(R.id.edit_text_password);
+        retype = (EditText) findViewById(R.id.edit_text_confirm_pass);
+        userType = (Spinner) findViewById(R.id.spinner_user_type);
+        btnRegister = (Button) findViewById(R.id.btn_register);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
     }//end public void setUp()
+
+    private void setUpToolbar() {
+        toolbar.setTitle(getString(R.string.register_toolbar_title));
+        toolbar.setTitleTextColor(Color.WHITE);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
 
     public void clickBtnRegister(){
 
@@ -70,49 +92,43 @@ public class RegistrationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 getData();
                 String strStatus;
-                if (userType.getSelectedItem().toString().equals("Farmer")){
+                progressDialogPrompt.showProgress(getString(R.string.signing_up));
+                try {
+                    if (userType.getSelectedItem().toString().equals("Farmer")) {
 
-                    FarmerBusiness farmerBusiness = new FarmerBusiness();
-                    strStatus = farmerBusiness.validateFarmer((Farmer) person);
+                        strStatus = (String) runThread(new FarmerService("registerFarmer", person)).get();
+                        progressDialogPrompt.stopProgress();
 
-                }//end if
-                else{
+                    }//end if
+                    else {
 
-                    AgriculturistBusiness agriculturistBusiness = new AgriculturistBusiness();
-                    strStatus = agriculturistBusiness.validateAgriculturist((Agriculturist)person);
+                        strStatus = (String) runThread(new AgriculturistService("registerAgriculturist",  person)).get();
+                        progressDialogPrompt.stopProgress();
 
-                }//end else
+                    }//end else
+                    switch (strStatus) {
+                        case "success":
+                            //display success view
+                            if (!ParseUser.getCurrentUser().getBoolean("isAdmin")) {
+                                showIntent(HomeScreenActivity.class);
+                            } else {
+                                //show Agri Home
+                                showIntent(AgriHomeScreenActivity.class);
+                            }
+                            break;
+                        case "error-database":
+                            break;
+                        case "error-existing":
+                            break;
+                        case "error-validate":
+                            //display error-validate
+                            Log.e("TAG", "ERROR-VALIDATE");
+                            break;
+                    }//end switch
 
-                if (strStatus.equals("success")){
-
-                    //display success view
-                    if (ParseUser.getCurrentUser().getBoolean("isAdmin") == false) {
-                        showIntent(HomeScreenActivity.class);
-                    }else{
-                        //show Agri Home
-                        showIntent(AgriHomeScreenActivity.class);
-                    }
-
-                }//end if success
-                else if (strStatus.equals("error-database")){
-
-                    //display error-database
-                    Log.e("TAG", "ERROR-DATABASE");
-
-                }//end else if error-database
-                else if (strStatus.equals("error-existing")){
-
-                    //display error-existing
-                    Log.e("TAG", "ERROR-EXISTING");
-
-                }//end else if error-existing
-                else if (strStatus.equals("error-validate")){
-
-                    //display error-validate
-                    Log.e("TAG", "ERROR-VALIDATE");
-
-                }//end else if error-validate
-
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }//end onClick
         });
 
@@ -148,20 +164,20 @@ public class RegistrationActivity extends AppCompatActivity {
             person.setPhoneNo(phoneNo.getText().toString());
 
         }//end else if (userType.getSelectedItem().toString().equals("Agriculturist"))
-        user.signUpInBackground(new SignUpCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e!=null){
-                    Log.e("TAG", e.getMessage());
-                }
-            }
-        });
 
     }//end getData()
 
     private void showIntent(Class className) {
         intent = new Intent(RegistrationActivity.this, className);
         startActivity(intent);
+        finish();
     }
+
+    private Future<Object> runThread(Callable object){
+        ExecutorService es = Executors.newSingleThreadExecutor();
+        Future<Object> futureObject = es.submit(object);
+
+        return futureObject;
+    }//end runThread
 
 }//end RegistrationActivity

@@ -45,9 +45,8 @@ public class FarmerDao extends Thread{
 //                return "error-existing";
                 strStatus = "error-existing";
             }//end if(queryFarmer.count()>0)
+            farmer.getUser().signUp();
             farmer.save();
-
-            Log.e("SAVE STATUS", strStatus);
             return "success";
         }catch(ParseException pe){
             pe.printStackTrace();
