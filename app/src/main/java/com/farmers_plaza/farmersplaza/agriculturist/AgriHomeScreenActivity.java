@@ -47,7 +47,7 @@ public class AgriHomeScreenActivity  extends AppCompatActivity{
         imgBtnSoilTester.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                showIntent();
+                showIntent(SoilAnalysisActivity.class);
             }
         });
     }
