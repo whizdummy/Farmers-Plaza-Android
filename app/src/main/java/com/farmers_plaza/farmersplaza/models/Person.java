@@ -26,7 +26,7 @@ public class Person extends ParseObject{
     }
 
     public ParseFile getDisplayPhoto(){
-        return getParseFile("display");
+        return getParseFile("displayPhoto");
     }
 
     public Date getBirthday() {

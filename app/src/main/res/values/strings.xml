@@ -36,5 +36,13 @@
     <string name="profile_toolbar_title">Profile</string>
     <string name="browse_farm_toolbar_title">Browse Farm</string>
     <string name="browse_crops_toolbar_title">Browse Crops</string>
+    <string name="soil_testing_toolbar_title">Soil Testing</string>
     <string name="income_toolbar_title">Income</string>
+    <string name="change_image_button">Change Image</string>
+    <string-array name="image_dialog_options">
+        <item>Take a Photo</item>
+        <item>Choose from your Gallery</item>
+        <item>Cancel</item>
+    </string-array>
+    <string name="profile_picture_dialog_text">Change Profile Picture via...</string>
 </resources>

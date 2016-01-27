@@ -3,11 +3,9 @@ package com.farmers_plaza.farmersplaza.dal;
 import android.util.Log;
 
 import com.farmers_plaza.farmersplaza.models.Agriculturist;
-import com.farmers_plaza.farmersplaza.models.Farmer;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SignUpCallback;
 
 public class AgriculturistDao {
 
@@ -51,5 +49,4 @@ public class AgriculturistDao {
         return "error-database";
 
     }//end public String registerAgriculturist(Agriculturist agri)
-
 }//end public class AgriculturistDao

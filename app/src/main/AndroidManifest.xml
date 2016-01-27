@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -67,18 +69,22 @@
         <activity
             android:name=".farmer.HomeScreenActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".farmer.FarmLocationActivity"
             android:label="@string/title_activity_farm_location" />
-
         <activity
             android:name=".farmer.FarmBrowseActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".farmer.CropBrowseActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".agriculturist.AgriHomeScreenActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".agriculturist.AgriProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".agriculturist.SoilAnalysisActivity"></activity>
     </application>
 
 </manifest>

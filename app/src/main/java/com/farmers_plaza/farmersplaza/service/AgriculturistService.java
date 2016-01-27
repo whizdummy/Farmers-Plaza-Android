@@ -3,11 +3,8 @@ package com.farmers_plaza.farmersplaza.service;
 import android.util.Log;
 
 import com.farmers_plaza.farmersplaza.business.AgriculturistBusiness;
-import com.farmers_plaza.farmersplaza.business.FarmerBusiness;
 import com.farmers_plaza.farmersplaza.dal.AgriculturistDao;
-import com.farmers_plaza.farmersplaza.dal.FarmerDao;
 import com.farmers_plaza.farmersplaza.models.Agriculturist;
-import com.farmers_plaza.farmersplaza.models.Farmer;
 import com.parse.ParseUser;
 
 import java.util.concurrent.Callable;
