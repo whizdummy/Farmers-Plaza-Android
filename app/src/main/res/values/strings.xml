@@ -29,4 +29,5 @@
         <item>Farmer</item>
         <item>Agriculturist</item>
     </string-array>
+    <string name="logging_in_text">Logging In...</string>
 </resources>
