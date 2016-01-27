@@ -117,7 +117,10 @@
                 android:id="@+id/btn_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/register_text" />
+                android:background="@color/colorPrimary"
+                android:text="@string/register_text"
+                android:textSize="18dp"
+                android:textColor="#ffffff" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
