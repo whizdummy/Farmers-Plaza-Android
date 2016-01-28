@@ -19,7 +19,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/imageView5"
+            android:id="@+id/small_farmer_profile"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@drawable/avatar" />

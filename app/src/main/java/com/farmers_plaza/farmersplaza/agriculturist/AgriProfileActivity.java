@@ -118,7 +118,9 @@ public class AgriProfileActivity extends AppCompatActivity {
                         public void done(byte[] data, ParseException e) {
                             if(e == null) {
                                 bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                                pictureView.setImageBitmap(bitmap);
+                                pictureView.setImageBitmap(Bitmap.createScaledBitmap(
+                                        bitmap, 250, 250, false
+                                ));
                                 pictureView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                                 pictureView.setAdjustViewBounds(true);
                             }
