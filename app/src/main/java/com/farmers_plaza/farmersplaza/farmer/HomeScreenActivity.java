@@ -118,8 +118,8 @@ public class HomeScreenActivity extends AppCompatActivity {
     }
 
     public void clickBrowseFarm(){
-        imgBtnCrops = (ImageButton)findViewById(R.id.btnBrowseFarm);
-        imgBtnCrops.setOnClickListener(new View.OnClickListener() {
+        imgBtnFarm = (ImageButton) findViewById(R.id.btn_browse_farm);
+        imgBtnFarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showIntent(FarmActivity.class);
