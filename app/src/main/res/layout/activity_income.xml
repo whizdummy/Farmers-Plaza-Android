@@ -7,7 +7,29 @@
 
     <include layout="@layout/toolbar" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/edit_text_actual_income"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:hint="@string/actual_income_hint"
+            android:inputType="numberDecimal"
+            />
+        <Button
+            android:id="@+id/btn_check_result"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/check_result_text"
+            />
+    </LinearLayout>
+
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/relative_chart"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,8 +39,8 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         tools:context="com.farmers_plaza.farmersplaza.farmer.IncomeActivity">
 
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/line_chart_income"
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/bar_chart_income"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             />

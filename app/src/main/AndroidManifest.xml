@@ -16,6 +16,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
+    <permission android:name="com.farmers_plaza.farmersplaza.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature"/>
+    <uses-permission android:name="com.farmers_plaza.farmersplaza.permission.MAPS_RECEIVE"/>
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
     <application
         android:name=".ParseStart"
         android:allowBackup="true"
@@ -24,6 +28,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <uses-library android:name="com.google.android.maps" />
         <meta-data
             android:name="com.parse.APPLICATION_ID"
             android:value="Zx5nOBNT55zZIMv3dvMg29a0r3un1zae5hET9FBw" />
@@ -55,28 +60,12 @@
             android:name=".farmer.FarmActivity"
             android:label="Browse Farm"
             android:screenOrientation="portrait" />
-        <!--
-             The API key for Google Maps-based APIs is defined as a string resource.
-             (See the file "res/values/google_maps_api.xml").
-             Note that the API key is linked to the encryption key used to sign the APK.
-             You need a different API key for each encryption key, including the release key that is used to
-             sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
-        -->
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC4VtKFM4PCyeuUt6gLLcnb7OAJGJaWqfQ" />
-
         <activity
             android:name=".farmer.HomeScreenActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".farmer.FarmLocationActivity"
-            android:label="@string/title_activity_farm_location" />
-        <activity
             android:name=".farmer.AddFarmActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".farmer.FarmBrowseActivity"
             android:screenOrientation="portrait" />
@@ -92,6 +81,23 @@
         <activity
             android:name=".agriculturist.SoilAnalysisActivity"
             android:screenOrientation="portrait" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".farmer.FarmLocationActivity"
+            android:label="@string/title_activity_farm_location">
+
+        </activity>
     </application>
 
 </manifest>

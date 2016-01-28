@@ -46,4 +46,6 @@
         <item>Cancel</item>
     </string-array>
     <string name="profile_picture_dialog_text">Change Profile Picture via...</string>
+    <string name="actual_income_hint">Actual Income</string>
+    <string name="check_result_text">Check</string>
 </resources>
