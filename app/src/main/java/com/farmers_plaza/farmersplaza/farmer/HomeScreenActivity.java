@@ -41,7 +41,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         clickFarm();
         clickSignOut();
         clickProfile();
-        clickBrowseFarm();
+//        clickBrowseFarm();
     }
 
     private void clickMap() {

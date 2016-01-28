@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -49,8 +48,8 @@ public class FarmerProfileActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        setUpToolbar();
         setImageToView();
+        setUpToolbar();
         clickChangeImage();
     }
 
@@ -93,7 +92,7 @@ public class FarmerProfileActivity extends AppCompatActivity{
 
     private void setImageToView() {
         pictureView = (ImageView) findViewById(R.id.img_view_profile_pic);
-        query = ParseQuery.getQuery("Agriculturist");
+        query = ParseQuery.getQuery("Farmer");
         query.whereEqualTo("user", ParseUser.getCurrentUser());
         query.addDescendingOrder("updatedAt");
         query.getFirstInBackground(new GetCallback<ParseObject>() {
@@ -101,17 +100,25 @@ public class FarmerProfileActivity extends AppCompatActivity{
             public void done(ParseObject object, ParseException e) {
                 if (e == null) {
                     parseFile = object.getParseFile("photo");
-                    parseFile.getDataInBackground(new GetDataCallback() {
-                        @Override
-                        public void done(byte[] data, ParseException e) {
-                            if (e == null) {
-                                bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                                pictureView.setImageBitmap(bitmap);
-                                pictureView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-                                pictureView.setAdjustViewBounds(true);
+                    try {
+                        parseFile.getDataInBackground(new GetDataCallback() {
+                            @Override
+                            public void done(byte[] data, ParseException e) {
+                                if (e == null) {
+                                    bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                                    pictureView.setImageBitmap(bitmap);
+                                    pictureView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                                    pictureView.setAdjustViewBounds(true);
+                                } else {
+                                    Log.e("IMG RETRIEVAL ERROR", e.getMessage());
+                                }
                             }
-                        }
-                    });
+                        });
+                    } catch (NullPointerException ex) {
+                        Log.e("NO FILE", ex.getMessage());
+                    }
+                } else {
+                    Log.e("QUERY ERROR", e.getMessage());
                 }
             }
         });
@@ -124,7 +131,7 @@ public class FarmerProfileActivity extends AppCompatActivity{
         }
         parseFile = new ParseFile(outputStream.toByteArray());
         parseFile.saveInBackground();
-        query = ParseQuery.getQuery("Agriculturist");
+        query = ParseQuery.getQuery("Farmer");
         query.whereEqualTo("user", ParseUser.getCurrentUser());
         query.addDescendingOrder("updatedAt");
         query.getFirstInBackground(new GetCallback<ParseObject>() {
