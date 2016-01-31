@@ -30,17 +30,9 @@ public class FarmActivity extends AppCompatActivity{
 
     public void setUp(){
 
-        listViewFarm = (ListView)findViewById(R.id.listFarm);
-        listFarm = (List<Farm>)runThread(new FarmService("retrieveFarm"));
-        adapterFarm = new ArrayAdapter<Farm>(this, R.id.listFarm, listFarm);
 
     }//end setUp
 
-    private Future<Object> runThread(Callable object){
-        ExecutorService es = Executors.newSingleThreadExecutor();
-        Future<Object> futureObject = es.submit(object);
-        return futureObject;
-    }//end runThread
 
 
 }//end FarmActivity
