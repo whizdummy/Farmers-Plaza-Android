@@ -8,6 +8,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.parse.ParseObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,6 +34,7 @@ public class BluetoothConnector extends AsyncTask<BluetoothDevice, Void, Void> {
     private int intMoisture;
     private int intSunlight;
     private int intSoilPh;
+    private double convertedPh;
     private int intTemperature;
     private boolean isError;
 
@@ -118,6 +121,41 @@ public class BluetoothConnector extends AsyncTask<BluetoothDevice, Void, Void> {
         builder.setMessage(String.format("Moisture: %d\nSunlight: %d\nSoil pH: %d\n" +
                 "Temperature: %d", intMoisture, intSunlight, intSoilPh, intTemperature));
         builder.show();
+        convertPh();
+    }
+
+    private void convertPh() {
+        if(intSoilPh <= 43) {
+            convertedPh = 0;
+        } else if(intSoilPh <= 62) {
+            convertedPh = 3.5;
+        } else if(intSoilPh <= 141) {
+            convertedPh = 4;
+        } else if(intSoilPh <= 361) {
+            convertedPh = 5;
+        } else if(intSoilPh <= 405) {
+            convertedPh = 5.5;
+        } else if(intSoilPh <= 444) {
+            convertedPh = 6.0;
+        } else if(intSoilPh <= 479) {
+            convertedPh = 6.5;
+        } else if(intSoilPh <= 515) {
+            convertedPh = 7;
+        } else if(intSoilPh <= 543) {
+            convertedPh = 7.5;
+        } else if(intSoilPh <= 581) {
+            convertedPh = 8;
+        } else if(intSoilPh <= 625) {
+            convertedPh = 8.5;
+        } else if(intSoilPh <= 699) {
+            convertedPh = 9;
+        } else {
+            convertedPh = 10;
+        }
+    }
+
+    public String getConvertedPH() {
+        return Double.toString(convertedPh);
     }
 
 
