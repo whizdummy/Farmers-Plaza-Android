@@ -1,17 +1,24 @@
 package com.farmers_plaza.farmersplaza.farmer;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.farmers_plaza.farmersplaza.R;
 import com.farmers_plaza.farmersplaza.controllers.general.MainActivity;
 import com.farmers_plaza.farmersplaza.models.Farmer;
 import com.farmers_plaza.farmersplaza.service.FarmerService;
+import com.parse.GetDataCallback;
+import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import java.util.concurrent.ExecutorService;
@@ -29,6 +36,8 @@ public class HomeScreenActivity extends AppCompatActivity {
     private ImageButton                 imgBtnIncome;
     private ImageButton                 imgBtnFarm;
     private ImageButton                 imgBtnProfile;
+    private ImageView                   imgFarmer;
+    private Bitmap                      bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +85,7 @@ public class HomeScreenActivity extends AppCompatActivity {
 
     public void setUp() {
         txtViewName = (TextView)findViewById(R.id.text_view_name_farmer);
+        imgFarmer = (ImageView)findViewById(R.id.small_farmer_profile);
 
         try {
             farmer = (Farmer)runThread("retrieveFarmer", ParseUser.getCurrentUser()).get();
@@ -83,6 +93,26 @@ public class HomeScreenActivity extends AppCompatActivity {
             e.printStackTrace();
         }//try catch
         txtViewName.setText(farmer.getName());
+        ParseFile parseFile = farmer.getParseFile("photo");
+        try {
+            parseFile.getDataInBackground(new GetDataCallback() {
+                @Override
+                public void done(byte[] data, ParseException e) {
+                    if (e == null) {
+                        bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                        imgFarmer.setImageBitmap(Bitmap.createScaledBitmap(
+                                bitmap, 40, 40, false
+                        ));
+                        imgFarmer.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                        imgFarmer.setAdjustViewBounds(true);
+                    } else {
+                        Log.e("IMG RETRIEVAL ERROR", e.getMessage());
+                    }
+                }
+            });
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }//end setUp
 
     private void clickFarm() {
