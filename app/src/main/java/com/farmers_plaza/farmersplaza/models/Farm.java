@@ -15,6 +15,10 @@ public class Farm extends ParseObject{
         return (Farmer)getParseObject("farmer");
     }
 
+    public double getFarmSize(){
+        return getFarmSizeLength()*getFarmSizeWidth();
+    }
+
     public void setFarmName(String farmName){
         put("farmName", farmName);
     }
@@ -23,12 +27,20 @@ public class Farm extends ParseObject{
         return getString("farmName");
     }
 
-    public void setFarmSize(double dblFarmSize){
-        put("farmSize", dblFarmSize);
+    public void setFarmSizeLength(double dblFarmSize){
+        put("farmSizeLength", dblFarmSize);
     }
 
-    public double getFarmSize(){
-        return getDouble("farmSize");
+    public double getFarmSizeLength(){
+        return getDouble("farmSizeLength");
+    }
+
+    public void setFarmSizeWidth(double dblFarmSize){
+        put("farmSizeWidth", dblFarmSize);
+    }
+
+    public double getFarmSizeWidth(){
+        return getDouble("farmSizeWidth");
     }
 
     public void setFarmAddress(String strAddress){

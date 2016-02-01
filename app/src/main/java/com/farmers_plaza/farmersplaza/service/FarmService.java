@@ -52,7 +52,7 @@ public class FarmService implements Callable{
         switch (this.strThreadMethod){
             case "registerFarm":
                 Log.e("THREAD", "registerFarm");
-                return registerFarm((Farm)object);
+//                return registerFarm((Farm)object);
             case "getAllFarm":
                 Log.e("THREAD", "getAllFarm");
                 return getAllFarm((ParseUser)object);
@@ -61,9 +61,9 @@ public class FarmService implements Callable{
 
     }//end call
 
-    public String registerFarm(Farm farm) throws IOException {
-        return farmBusiness.registerFarm(farm, geocoder);
-    }
+//    public String registerFarm(Farm farm) throws IOException {
+//        return farmBusiness.validate(farm, geocoder);
+//    }
 
     public List<Farm>getAllFarm(ParseUser user){
         return farmBusiness.getAllFarm(user);

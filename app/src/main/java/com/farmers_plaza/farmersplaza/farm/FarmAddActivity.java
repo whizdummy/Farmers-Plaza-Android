@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 
+import com.farmers_plaza.farmersplaza.R;
 import com.farmers_plaza.farmersplaza.farmer.HomeScreenActivity;
 import com.farmers_plaza.farmersplaza.service.FarmService;
 import com.farmers_plaza.farmersplaza.service.FarmerService;
@@ -20,6 +21,7 @@ public class FarmAddActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_farm);
 
     }
 

@@ -120,7 +120,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         imgBtnFarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showIntent(FarmBrowseActivity.class);
+                showIntent(AddFarmActivity.class);
             }
         });
     } // end clickFarm
@@ -146,17 +146,6 @@ public class HomeScreenActivity extends AppCompatActivity {
                 showIntent(FarmerProfileActivity.class);
             }//end onClick
         });
-    }
-
-    public void clickBrowseFarm(){
-        imgBtnFarm = (ImageButton) findViewById(R.id.btn_browse_farm);
-        imgBtnFarm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showIntent(FarmActivity.class);
-            }
-        });
-
     }
 
     private void showIntent(Class className) {

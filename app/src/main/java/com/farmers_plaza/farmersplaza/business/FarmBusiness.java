@@ -32,20 +32,20 @@ public class FarmBusiness {
 
     }//end getAllFarm
 
-    public String registerFarm(Farm farm, Geocoder geocoder) throws IOException {
+    public Farm validate(Farm farm, Geocoder geocoder) throws IOException {
         if(isFarmNull(farm)){
-            return "error-validation";
+            return null;
         }//end isFarmNull
 
         String regExpression;
         regExpression = "([A-z ,-]){2,}";
         if(!farm.getFarmAddress().matches(regExpression)){
-            return "error-validation";
+            return null;
         }//end farmAddress
 
         Address farmAddress = geocoder.getFromLocationName(farm.getFarmAddress(), 1).get(0);
         if (farmAddress == null){
-            return "error-location-not-found";
+            return null;
         }//end Address validation
 
         ParseGeoPoint geoPoint = new ParseGeoPoint();
@@ -53,7 +53,7 @@ public class FarmBusiness {
         geoPoint.setLongitude(farmAddress.getLongitude());
         farm.setGeoPoint(geoPoint);
 
-        return farmDao.registerFarm(farm);
+        return farm;
 
     }//end registerFarm
 
@@ -61,7 +61,9 @@ public class FarmBusiness {
         if(farm.getFarmer()==null){
             return true;
         }
-        else if(farm.getFarmSize() < 0){
+        else if(farm.getFarmSizeLength() < 0){
+            return true;
+        }else if(farm.getFarmSizeWidth() < 0){
             return true;
         }
         else if(TextUtils.isEmpty(farm.getFarmAddress())){
