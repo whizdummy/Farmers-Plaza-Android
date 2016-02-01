@@ -20,7 +20,6 @@
     <string name="login_text">LOGIN</string>
     <string name="signUpText">SIGN UP</string>
     <string name="forgot_pass_text">Forgot Password?</string>
-    <string name="title_activity_farm_location">Map</string>
     <string name="profile_text">Profile</string>
 
     <string name="logout_text">LOG OUT</string>
@@ -48,4 +47,5 @@
     <string name="profile_picture_dialog_text">Change Profile Picture via...</string>
     <string name="actual_income_hint">Actual Income</string>
     <string name="check_result_text">Check</string>
+    <string name="title_activity_farm_location">Map</string>
 </resources>
