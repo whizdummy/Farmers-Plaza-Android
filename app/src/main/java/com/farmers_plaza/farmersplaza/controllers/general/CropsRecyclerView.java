@@ -9,25 +9,23 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.farmers_plaza.farmersplaza.R;
-import com.farmers_plaza.farmersplaza.models.CropAdapter;
-import com.farmers_plaza.farmersplaza.models.FarmAdapter;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class CropsRecyclerView extends
         RecyclerView.Adapter<CropsRecyclerView.FarmerViewHolder> {
-    List<CropAdapter> cropList;
+    ArrayList<String> cropList;
     Context context;
 
-    public CropsRecyclerView (List<CropAdapter> farmList, Context context) {
-        this.cropList = farmList;
+    public CropsRecyclerView (ArrayList<String> cropList, Context context) {
+        this.cropList = cropList;
         this.context = context;
     }
 
     @Override
     public FarmerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_view_browse_crop_farm, parent, false);
+                .inflate(R.layout.card_view_browse_crop_result, parent, false);
         return (new FarmerViewHolder(view));
     }
 
@@ -38,7 +36,7 @@ public class CropsRecyclerView extends
 
     @Override
     public void onBindViewHolder(final FarmerViewHolder holder, final int position) {
-        holder.textViewFarmName.setText(cropList.get(position).getCropName());
+        holder.textViewFarmName.setText(cropList.get(position));
     }
 
     @Override
@@ -53,7 +51,7 @@ public class CropsRecyclerView extends
         FarmerViewHolder(View itemView) {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.card_view_farm_browse_crop);
-            textViewFarmName = (TextView) itemView.findViewById(R.id.text_view_farm_name_browse_crop);
+            textViewFarmName = (TextView) itemView.findViewById(R.id.card_view_browse_crop);
         }
     }
 }

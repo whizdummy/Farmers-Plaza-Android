@@ -27,6 +27,7 @@ public class FarmBrowseCropRecyclerViewAdapter extends
     ParseObject farm;
     ParseObject soilTest;
     List<ParseObject> compatibleCrops;
+    ArrayList<String> compatibleCropsName = new ArrayList<>();
 
     public FarmBrowseCropRecyclerViewAdapter(List<FarmAdapter> farmList, Context context) {
         this.farmList = farmList;
@@ -53,7 +54,6 @@ public class FarmBrowseCropRecyclerViewAdapter extends
             public void onClick(View v) {
 
                 String farmName = farmList.get(position).getFarmName();
-                System.out.println(farmName);
                 ParseQuery queryFarm = new ParseQuery("Farm");
                 queryFarm.whereEqualTo("farmName", farmName);
                 try{
@@ -76,14 +76,18 @@ public class FarmBrowseCropRecyclerViewAdapter extends
                     for (ParseObject crop:crops) {
                         if ((Double.parseDouble((String)crop.get("minPh")) <= Double.parseDouble((String)soilTest.get("soilPH")))
                                 && (Double.parseDouble((String)crop.get("maxPh")) >= Double.parseDouble((String)soilTest.get("soilPH")))){
-                            System.out.println("Compatible: " +crop.get("cropName"));
+                            Log.e("Result", "Compatible: " +crop.get("cropName"));
                             compatibleCrops.add(crop);
+                            compatibleCropsName.add(crop.getString("cropName"));
                         }
                     }
                 }catch(Exception e) {
                     e.printStackTrace();
                 }
                 //codes to add compatibleCrops to CardView
+                Intent intent = new Intent(v.getContext(), CropBrowseResultActivity.class);
+                intent.putStringArrayListExtra("crops", compatibleCropsName);
+                context.startActivity(intent);
             }
         });
     }
