@@ -15,6 +15,7 @@ public class FarmAdapter {
     public FarmAdapter(String objectId, String farmName, String owner) {
         this.farmName = farmName;
         this.owner = owner;
+        this.objectId = objectId;
     }
 
     public String getFarmName() {

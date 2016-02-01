@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.farmers_plaza.farmersplaza.R;
+import com.farmers_plaza.farmersplaza.models.Agriculturist;
 import com.farmers_plaza.farmersplaza.models.FarmAdapter;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -26,7 +27,9 @@ public class SoilAnalysisRecyclerViewAdapter extends
         RecyclerView.Adapter<SoilAnalysisRecyclerViewAdapter.FarmerViewHolder> {
     List<FarmAdapter> farmList;
     Context context;
-String agriId;
+    String agriId;
+    ParseObject agriculturist;
+    ParseObject farm;
     String farmId;
     BluetoothDevice bluetoothDevice;
     BluetoothConnector bluetoothConnector;
@@ -59,6 +62,14 @@ String agriId;
             public void onClick(View v) {
                 queryAgriculturistId();
                 farmId = farmList.get(position).getObjectId();
+                System.out.println(farmId);
+                ParseQuery query = new ParseQuery("Farm");
+                query.whereEqualTo("objectId", farmId);
+                try {
+                    farm = query.getFirst();
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
                 bluetoothConnector = new BluetoothConnector(v.getContext());
                 bluetoothConnector.execute(bluetoothDevice);
                 saveToDB();
@@ -68,8 +79,8 @@ String agriId;
 
     private void saveToDB() {
         ParseObject parseObject = ParseObject.create("SoilTest");
-        parseObject.put("tester", ParseObject.createWithoutData("Agriculturist", agriId));
-        parseObject.put("farm", ParseObject.createWithoutData("Farm", farmId));
+        parseObject.put("tester", agriculturist);
+        parseObject.put("farm", farm);
         parseObject.put("soilPH", bluetoothConnector.getConvertedPH());
         parseObject.saveInBackground(new SaveCallback() {
             @Override
@@ -84,12 +95,12 @@ String agriId;
     private void queryAgriculturistId() {
         ParseQuery<ParseObject> agriQuery = ParseQuery.getQuery("Agriculturist");
         agriQuery.whereEqualTo("user", ParseUser.getCurrentUser());
-        agriQuery.getFirstInBackground(new GetCallback<ParseObject>() {
-            @Override
-            public void done(ParseObject object, ParseException e) {
-                agriId = object.getObjectId();
-            }
-        });
+        try {
+            agriculturist = agriQuery.getFirst();
+            System.out.println(agriculturist.get("firstName"));
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

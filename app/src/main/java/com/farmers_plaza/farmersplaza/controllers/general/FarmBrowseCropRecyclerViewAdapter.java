@@ -3,6 +3,7 @@ package com.farmers_plaza.farmersplaza.controllers.general;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,13 +11,19 @@ import android.widget.TextView;
 
 import com.farmers_plaza.farmersplaza.R;
 import com.farmers_plaza.farmersplaza.models.FarmAdapter;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FarmBrowseCropRecyclerViewAdapter extends
         RecyclerView.Adapter<FarmBrowseCropRecyclerViewAdapter.FarmerViewHolder> {
     List<FarmAdapter> farmList;
     Context context;
+    ParseObject farm;
+    ParseObject soilTest;
+    List<ParseObject> compatibleCrops;
 
     public FarmBrowseCropRecyclerViewAdapter(List<FarmAdapter> farmList, Context context) {
         this.farmList = farmList;
@@ -41,7 +48,43 @@ public class FarmBrowseCropRecyclerViewAdapter extends
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+
+                String farmName = farmList.get(position).getFarmName();
+                System.out.println(farmName);
+                ParseQuery queryFarm = new ParseQuery("Farm");
+                queryFarm.whereEqualTo("farmName", farmName);
+                try{
+                    farm = queryFarm.getFirst();
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                ParseQuery querySoilTest = new ParseQuery("SoilTest");
+                querySoilTest.whereEqualTo("farm", farm);
+                querySoilTest.orderByDescending("createdAt");
+                try {
+                    soilTest = querySoilTest.getFirst();
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                compatibleCrops = new ArrayList<ParseObject>();
+                ParseQuery queryCrop = new ParseQuery("Crop");
+//                queryCrop.whereGreaterThanOrEqualTo("minPh", soilTest.get("soilPh"));
+//                queryCrop.whereLessThanOrEqualTo("maxPh", soilTest.get("soilPh"));
+                try {
+                    List<ParseObject> crops = queryCrop.find();
+                    for (ParseObject crop:crops) {
+                        if ((Double.parseDouble((String)crop.get("minPh")) <= Double.parseDouble((String)soilTest.get("soilPH")))
+                                && (Double.parseDouble((String)crop.get("maxPh")) >= Double.parseDouble((String)soilTest.get("soilPH")))){
+                            System.out.println("Compatible: " +crop.get("cropName"));
+                            compatibleCrops.add(crop);
+                        }
+                    }
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+
+
             }
         });
     }
