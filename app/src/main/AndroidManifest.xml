@@ -108,6 +108,8 @@
         <activity
             android:name=".farmer.FarmLocationActivity"
             android:label="@string/title_activity_farm_location"></activity>
+
+        <activity android:name=".farmer.CropBrowseResultActivity" />
     </application>
 
 </manifest>

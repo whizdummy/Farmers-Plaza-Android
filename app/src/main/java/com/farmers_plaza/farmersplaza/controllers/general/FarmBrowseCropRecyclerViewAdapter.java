@@ -38,6 +38,12 @@ public class FarmBrowseCropRecyclerViewAdapter extends
     @Override
     public void onBindViewHolder(final FarmerViewHolder holder, final int position) {
         holder.textViewFarmName.setText(farmList.get(position).getFarmName());
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            }
+        });
     }
 
     @Override
