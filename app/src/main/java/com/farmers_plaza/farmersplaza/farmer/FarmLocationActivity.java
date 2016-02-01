@@ -3,6 +3,7 @@ package com.farmers_plaza.farmersplaza.farmer;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.farmers_plaza.farmersplaza.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -14,6 +15,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -50,9 +52,21 @@ public class FarmLocationActivity extends Activity implements OnMapReadyCallback
     }
 
     private void getFarmersFarm() {
-        farmQuery = ParseQuery.getQuery("Farm");
-        farmQuery.whereEqualTo("farmer", ParseUser.getCurrentUser());
-        (new FetchFarm()).execute();
+        getCurrentFarmer();
+    }
+
+    private void getCurrentFarmer() {
+        ParseQuery<ParseObject> currentFarmerQuery = ParseQuery.getQuery("Farmer");
+        currentFarmerQuery.whereEqualTo("user", ParseUser.getCurrentUser());
+        currentFarmerQuery.getFirstInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject object, ParseException e) {
+                farmQuery = ParseQuery.getQuery("Farm");
+                farmQuery.whereEqualTo("farmer", ParseObject.createWithoutData("Farmer", object.getObjectId()));
+                Log.e("ID", object.getObjectId());
+                (new FetchFarm()).execute();
+            }
+        });
     }
 
     @Override
