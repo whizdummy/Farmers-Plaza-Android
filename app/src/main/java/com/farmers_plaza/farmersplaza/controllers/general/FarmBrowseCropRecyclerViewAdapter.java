@@ -1,6 +1,7 @@
 package com.farmers_plaza.farmersplaza.controllers.general;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.farmers_plaza.farmersplaza.R;
+import com.farmers_plaza.farmersplaza.farmer.CropBrowseActivity;
+import com.farmers_plaza.farmersplaza.farmer.CropBrowseResultActivity;
 import com.farmers_plaza.farmersplaza.models.FarmAdapter;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -68,8 +71,6 @@ public class FarmBrowseCropRecyclerViewAdapter extends
                 }
                 compatibleCrops = new ArrayList<ParseObject>();
                 ParseQuery queryCrop = new ParseQuery("Crop");
-//                queryCrop.whereGreaterThanOrEqualTo("minPh", soilTest.get("soilPh"));
-//                queryCrop.whereLessThanOrEqualTo("maxPh", soilTest.get("soilPh"));
                 try {
                     List<ParseObject> crops = queryCrop.find();
                     for (ParseObject crop:crops) {
@@ -79,12 +80,10 @@ public class FarmBrowseCropRecyclerViewAdapter extends
                             compatibleCrops.add(crop);
                         }
                     }
-                }catch(Exception e){
+                }catch(Exception e) {
                     e.printStackTrace();
                 }
-
-
-
+                //codes to add compatibleCrops to CardView
             }
         });
     }
