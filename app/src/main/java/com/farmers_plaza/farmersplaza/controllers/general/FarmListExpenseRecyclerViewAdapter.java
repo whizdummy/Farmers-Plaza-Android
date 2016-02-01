@@ -44,6 +44,7 @@ public class FarmListExpenseRecyclerViewAdapter extends
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), TasksActivity.class);
+                intent.putExtra("farm", farmList.get(position).getFarmName());
                 context.startActivity(intent);
             }
         });

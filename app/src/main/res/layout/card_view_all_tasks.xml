@@ -9,10 +9,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <EditText
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:inputType="numberDecimal"
+            android:textSize="15sp"
+            android:ems="10"
+            android:id="@+id/editText_expense"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/btn_enter_expense"
+            android:hint="Amount of Expense"/>
+
         <TextView
             android:id="@+id/text_view_task_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="ken"/>
 
         <Button
             android:id="@+id/btn_enter_expense"
@@ -20,5 +32,8 @@
             android:layout_height="wrap_content"
             android:text="Enter Expense"
             android:layout_alignParentEnd="true"/>
+
+
+
     </RelativeLayout>
 </android.support.v7.widget.CardView>

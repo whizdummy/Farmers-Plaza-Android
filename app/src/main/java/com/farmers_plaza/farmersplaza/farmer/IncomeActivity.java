@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -18,8 +19,13 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.parse.Parse;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class IncomeActivity extends AppCompatActivity implements View.OnClickListener {
     BarChart chart;
@@ -27,20 +33,65 @@ public class IncomeActivity extends AppCompatActivity implements View.OnClickLis
     ToolbarSetup toolbarSetup;
     EditText editTxtactualIncome;
     Button btnCheckResult;
-    static double CROP_PRICE = 50000;
-    static double ESTIMATED_CROPS = 10;
-    static double TOTAL_EXPENSE = 5000;
-    static double dblEstimatedIncome;
+    double CROP_PRICE;
+    double ESTIMATED_CROPS;
+    double TOTAL_EXPENSE;
+    double dblEstimatedIncome;
 //    List<Entry> estimatedIncome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try{
+            getData();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         setContentView(R.layout.activity_income);
         setUp();
         clickCheckResult();
         setUpToolbar();
         setUpChart();
+    }
+
+    public void getData() throws Exception{
+
+        ParseQuery queryFarmer = new ParseQuery("Farmer");
+        queryFarmer.whereEqualTo("user", ParseUser.getCurrentUser());
+        ParseObject farmer = queryFarmer.getFirst();
+        Log.e("SUCCESS", "farmer retrieved");
+
+        ParseQuery queryFarm = new ParseQuery("Farm");
+        queryFarm.whereEqualTo("farmer", farmer);
+        ParseObject farm = queryFarm.getFirst();
+        Log.e("SUCCESS", "farm retrieved");
+
+//        ParseQuery queryCrop = new ParseQuery("Crop");
+//        queryCrop.whereEqualTo("objectId", farm.get("cropPlanted"));
+        ParseObject crop = (ParseObject)farm.get("cropPlanted");
+        crop.fetch();
+        Log.e("Price", (String)crop.get("price"));
+        Log.e("SUCCESS", "crop retrieved");
+
+
+        List<ParseObject>listExpense;
+        ParseQuery queryExpense = new ParseQuery("TaskExpense");
+        queryExpense.whereEqualTo("farm", farm);
+        listExpense = queryExpense.find();
+        Log.e("SUCCESS", "expense retrieved");
+        double totalExpense = 0;
+
+        for (ParseObject expense: listExpense) {
+            totalExpense+=(Integer)expense.get("expense");
+        }
+
+        CROP_PRICE = Double.parseDouble((String) crop.get("price"));
+        ESTIMATED_CROPS = Double.parseDouble((String)farm.get("farmSize"))/Double.parseDouble((String)crop.get("plantingDistance"));
+        TOTAL_EXPENSE = totalExpense;
+        System.out.println(CROP_PRICE);
+        System.out.println(ESTIMATED_CROPS);
+        System.out.println(TOTAL_EXPENSE);
+
     }
 
     private void setUpChart() {
@@ -104,6 +155,7 @@ public class IncomeActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         if(!TextUtils.isEmpty(editTxtactualIncome.getText().toString())) {
             dblEstimatedIncome = (CROP_PRICE * ESTIMATED_CROPS) - TOTAL_EXPENSE;
+            System.out.println(dblEstimatedIncome);
             data = new BarData(getXAxisValues(), getDataSet((float) dblEstimatedIncome,
                     Float.parseFloat(editTxtactualIncome.getText().toString())));
             chart.setData(data);
