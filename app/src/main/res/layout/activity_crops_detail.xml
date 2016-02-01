@@ -42,7 +42,6 @@
                 android:id="@+id/text_view_crop_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="About Crop anything o yea, kayo na maglagaty"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -57,7 +56,6 @@
                 android:id="@+id/text_view_crop_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Blah blah blah kayo na mag lagay"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
         </LinearLayout>

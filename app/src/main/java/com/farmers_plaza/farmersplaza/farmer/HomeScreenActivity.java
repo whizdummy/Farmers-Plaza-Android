@@ -38,6 +38,7 @@ public class HomeScreenActivity extends AppCompatActivity {
     private ImageButton                 imgBtnProfile;
     private ImageView                   imgFarmer;
     private Bitmap                      bitmap;
+    private ImageButton imgBtnExpense;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +48,21 @@ public class HomeScreenActivity extends AppCompatActivity {
         clickMap();
         clickCrops();
         clickIncome();
+        clickExpense();
         clickFarm();
         clickSignOut();
         clickProfile();
 //        clickBrowseFarm();
+    }
+
+    private void clickExpense() {
+        imgBtnExpense = (ImageButton) findViewById(R.id.img_btn_expenses);
+        imgBtnExpense.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showIntent(ExpensesActivity.class);
+            }
+        });
     }
 
     private void clickMap() {
