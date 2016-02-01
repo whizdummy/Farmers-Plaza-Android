@@ -16,7 +16,7 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         tools:context="com.farmers_plaza.farmersplaza.agriculturist.SoilAnalysisActivity">
 
-
+        <include layout="@layout/spinner_template" />
 
         <Button
             android:id="@+id/btn_check_result"
