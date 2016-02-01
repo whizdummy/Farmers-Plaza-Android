@@ -87,6 +87,7 @@ public class FarmBrowseCropRecyclerViewAdapter extends
                 //codes to add compatibleCrops to CardView
                 Intent intent = new Intent(v.getContext(), CropBrowseResultActivity.class);
                 intent.putStringArrayListExtra("crops", compatibleCropsName);
+                intent.putExtra("farm", (String)farm.get("farmName"));
                 context.startActivity(intent);
             }
         });

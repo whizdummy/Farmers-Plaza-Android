@@ -17,15 +17,19 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class CropsRecyclerView extends
         RecyclerView.Adapter<CropsRecyclerView.FarmerViewHolder> {
     ArrayList<String> cropList;
     Context context;
+    String farmName;
+    ParseObject farm;
 
-    public CropsRecyclerView (ArrayList<String> cropList, Context context) {
+    public CropsRecyclerView (ArrayList<String> cropList, Context context, String farmName) {
         this.cropList = cropList;
         this.context = context;
+        this.farmName = farmName;
     }
 
     @Override
@@ -68,6 +72,13 @@ public class CropsRecyclerView extends
         ParseObject cropObject;
         query.whereEqualTo("cropName", cropName);
         cropObject = query.getFirst();
+        ParseQuery<ParseObject>farmQuery = new ParseQuery<ParseObject>("Farm");
+        farmQuery.whereEqualTo("farmName", farmName);
+        farm = farmQuery.getFirst();
+        farm.put("cropPlanted", cropObject);
+        farm.put("cropPlantedDate", new Date());
+        farm.save();
+        System.out.println("Successfully planted the crop.");
     }
 
     @Override

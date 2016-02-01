@@ -17,6 +17,7 @@ public class CropBrowseResultActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     CropsRecyclerView cropsRecyclerView;
+    String farmName;
 
     @Override
     protected void onResume() {
@@ -27,7 +28,7 @@ public class CropBrowseResultActivity extends AppCompatActivity {
     private void setUpView() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_browse_crop);
         linearLayoutManager = new LinearLayoutManager(this);
-        cropsRecyclerView = new CropsRecyclerView(cropNameList, this);
+        cropsRecyclerView = new CropsRecyclerView(cropNameList, this, farmName);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(cropsRecyclerView);
@@ -43,6 +44,8 @@ public class CropBrowseResultActivity extends AppCompatActivity {
                 cropNameList.add(crop);
                 Log.e("CRAP", crop);
             }
+            farmName = getIntent().getExtras().getString("farm");
+            System.out.println(farmName);
         }
     }
 }
