@@ -69,6 +69,7 @@ public class SoilAnalysisActivity extends AppCompatActivity {
     }
 
     private void checkPairedDevice() {
+        boolean isPaired = false;
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
 
@@ -76,20 +77,28 @@ public class SoilAnalysisActivity extends AppCompatActivity {
             for (BluetoothDevice device : pairedDevices) {
                 if (device.getName().equals("SOIL_TESTER")) {
                     mmDevice = device;
+                    isPaired = true;
                     break;
                 }
             }
+            if(!isPaired) {
+                showNoDevice();
+            }
         } else {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("NOT CONNECTED!");
-            builder.setMessage("Not connected to device. Please try again");
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    finish();
-                }
-            }).show();
+            showNoDevice();
         }
+    }
+
+    private void showNoDevice() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("NOT CONNECTED!");
+        builder.setMessage("Not connected to device. Please try again");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        }).show();
     }
 
     private void setupToolbar() {

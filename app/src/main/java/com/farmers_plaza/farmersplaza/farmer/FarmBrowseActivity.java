@@ -35,6 +35,7 @@ public class FarmBrowseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         getFarmersFarm();
+        setUpFarmList();
     }
 
     private void getFarmersFarm() {
@@ -42,16 +43,6 @@ public class FarmBrowseActivity extends AppCompatActivity {
         farmQuery.whereEqualTo("farmer", ParseUser.getCurrentUser());
         (new FarmFetch(farmQuery)).execute();
     }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_browse_farms);
-        setUp();
-        addFarmClick();
-        setUpFarmList();
-    }
-
     private void setUpFarmList() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_farm_list);
         linearLayoutManager = new LinearLayoutManager(this);
@@ -59,6 +50,15 @@ public class FarmBrowseActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(farmRecyclerViewAdapter);
+    }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_browse_farms);
+        setUp();
+        addFarmClick();
     }
 
     private void addFarmClick() {
