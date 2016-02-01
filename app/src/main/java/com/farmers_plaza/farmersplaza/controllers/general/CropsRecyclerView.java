@@ -50,8 +50,8 @@ public class CropsRecyclerView extends
 
         FarmerViewHolder(View itemView) {
             super(itemView);
-            cardView = (CardView) itemView.findViewById(R.id.card_view_farm_browse_crop);
-            textViewFarmName = (TextView) itemView.findViewById(R.id.card_view_browse_crop);
+            cardView = (CardView) itemView.findViewById(R.id.card_view_browse_crop);
+            textViewFarmName = (TextView) itemView.findViewById(R.id.text_view_crop);
         }
     }
 }

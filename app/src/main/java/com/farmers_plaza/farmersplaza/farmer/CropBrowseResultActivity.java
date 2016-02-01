@@ -25,7 +25,7 @@ public class CropBrowseResultActivity extends AppCompatActivity {
     }
 
     private void setUpView() {
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view_farm_list);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view_browse_crop);
         linearLayoutManager = new LinearLayoutManager(this);
         cropsRecyclerView = new CropsRecyclerView(cropNameList, this);
         recyclerView.setHasFixedSize(true);
