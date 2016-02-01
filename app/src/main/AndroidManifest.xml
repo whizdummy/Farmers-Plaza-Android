@@ -111,7 +111,8 @@
         <activity android:name=".farmer.CropBrowseResultActivity" />
         <activity android:name=".farmer.CropDetailsActivity" />
         <activity android:name=".farmer.ExpensesActivity" />
-        <activity android:name=".farmer.TasksActivity"></activity>
+        <activity android:name=".farmer.TasksActivity" />
+        <activity android:name=".farmer.ViewAllTaskActivity"></activity>
     </application>
 
 </manifest>

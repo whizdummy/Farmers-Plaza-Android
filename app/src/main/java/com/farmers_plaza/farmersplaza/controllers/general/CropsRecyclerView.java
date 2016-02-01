@@ -7,10 +7,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.farmers_plaza.farmersplaza.R;
 import com.farmers_plaza.farmersplaza.farmer.CropDetailsActivity;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 
@@ -39,7 +43,7 @@ public class CropsRecyclerView extends
     @Override
     public void onBindViewHolder(final FarmerViewHolder holder, final int position) {
         holder.textViewFarmName.setText(cropList.get(position));
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
+        holder.btnCropDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), CropDetailsActivity.class);
@@ -47,6 +51,23 @@ public class CropsRecyclerView extends
                 context.startActivity(intent);
             }
         });
+        holder.btnCropSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    saveDataToDb(cropList.get(position));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void saveDataToDb(String cropName) throws ParseException {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Crop");
+        ParseObject cropObject;
+        query.whereEqualTo("cropName", cropName);
+        cropObject = query.getFirst();
     }
 
     @Override
@@ -57,11 +78,15 @@ public class CropsRecyclerView extends
     public static class FarmerViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
         TextView textViewFarmName;
+        Button btnCropDetails;
+        Button btnCropSave;
 
         FarmerViewHolder(View itemView) {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.card_view_browse_crop);
             textViewFarmName = (TextView) itemView.findViewById(R.id.text_view_crop);
+            btnCropDetails = (Button) itemView.findViewById(R.id.btn_view_crop_details);
+            btnCropSave = (Button) itemView.findViewById(R.id.btn_save_crop);
         }
     }
 }
