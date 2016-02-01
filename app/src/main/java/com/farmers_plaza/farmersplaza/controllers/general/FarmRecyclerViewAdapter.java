@@ -39,15 +39,7 @@ public class FarmRecyclerViewAdapter extends
 
     @Override
     public void onBindViewHolder(final FarmerViewHolder holder, final int position) {
-//        holder.textViewStudentName.setText(farmList.get(position).getStrName());
-//        holder.textViewContactNum.setText(farmList.get(position).getStrContactNum());
-//        holder.textViewTotalFee.setText(farmList.get(position).getStrRequestedHr());
-        holder.btnReject.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                holder.cardView.setVisibility(View.GONE);
-            }
-        });
+        holder.textViewFarmName.setText(farmList.get(position).getFarmName());
     }
 
     @Override
@@ -57,19 +49,12 @@ public class FarmRecyclerViewAdapter extends
 
     public static class FarmerViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
-        TextView textViewStudentName;
-        TextView textViewTotalFee;
-        TextView textViewContactNum;
-        Button btnReject;
+        TextView textViewFarmName;
 
         FarmerViewHolder(View itemView) {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.card_view_farm);
-//            cardView = (CardView)itemView.findViewById(R.id.card_view_student_request);
-//            textViewStudentName = (TextView) itemView.findViewById(R.id.text_view_student_name_request);
-//            textViewTotalFee = (TextView)itemView.findViewById(R.id.text_view_total_fee);
-//            textViewContactNum = (TextView) itemView.findViewById(R.id.text_view_contact_num);
-//            btnReject = (Button) itemView.findViewById(R.id.btnReject);
+            textViewFarmName = (TextView) itemView.findViewById(R.id.text_view_farm_list);
         }
     }
 }
