@@ -12,19 +12,14 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.farmers_plaza.farmersplaza.R;
-import com.farmers_plaza.farmersplaza.business.FarmBusiness;
-import com.farmers_plaza.farmersplaza.business.FarmerBusiness;
 import com.farmers_plaza.farmersplaza.controllers.general.ToolbarSetup;
 import com.farmers_plaza.farmersplaza.models.Farm;
 import com.farmers_plaza.farmersplaza.models.Farmer;
 import com.farmers_plaza.farmersplaza.service.FarmerService;
-import com.github.mikephil.charting.data.DataSet;
-import com.google.android.gms.vision.barcode.Barcode;
-import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
@@ -47,6 +42,8 @@ public class AddFarmActivity extends AppCompatActivity {
     private EditText txtFarmLocation;
     private Button btnSubmit;
     private Farm farm;
+    private ParseObject farmerObjRef;
+    private ParseObject farmerObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,29 +70,7 @@ public class AddFarmActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ParseObject farmerObject = ParseObject.create("Farm");
-                farmerObject.put("farmer", ParseUser.getCurrentUser());
-                farmerObject.put("farmName", txtFarmName.getText().toString());
-                farmerObject.put("farmSize",
-                        Double.toString(Double.parseDouble(txtFarmSizeLength.getText().toString())
-                                * Double.parseDouble(txtFarmSizeWidth.getText().toString())));
-                farmerObject.put("farmerAddress", txtFarmLocation.getText().toString());
-                farmerObject.put("farmerGeoPoint",
-                        addressToGeopoint(txtFarmLocation.getText().toString()));
-                farmerObject.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if(e == null) {
-                            Toast.makeText(AddFarmActivity.this,
-                                    "Successfully Saved!", Toast.LENGTH_LONG)
-                                    .show();
-                        } else {
-                            Toast.makeText(AddFarmActivity.this,
-                                    "Save Failed!", Toast.LENGTH_LONG)
-                                    .show();
-                        }
-                    }
-                });
+                fetchFarmer();
             }
         });
 
@@ -163,5 +138,42 @@ public class AddFarmActivity extends AppCompatActivity {
             finish();
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    private void fetchFarmer () {
+            ParseQuery<ParseObject> farmerQuery = ParseQuery.getQuery("Farmer");
+            farmerQuery.whereEqualTo("user", ParseUser.getCurrentUser());
+            farmerQuery.getFirstInBackground(new GetCallback<ParseObject>() {
+                @Override
+                public void done(ParseObject object, ParseException e) {
+                    if (e == null) {
+//                        farmerObjRef = object;
+                        Log.e("Hello", object.getObjectId());
+                        farmerObject = ParseObject.create("Farm");
+                        farmerObject.put("farmName", txtFarmName.getText().toString());
+                        farmerObject.put("farmer", ParseObject.createWithoutData("Farmer", object.getObjectId()));
+                        farmerObject.put("farmSize",
+                                Double.toString(Double.parseDouble(txtFarmSizeLength.getText().toString())
+                                        * Double.parseDouble(txtFarmSizeWidth.getText().toString())));
+                        farmerObject.put("farmerAddress", txtFarmLocation.getText().toString());
+                        farmerObject.put("farmerGeoPoint",
+                                addressToGeopoint(txtFarmLocation.getText().toString()));
+                        farmerObject.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e == null) {
+                                    Toast.makeText(AddFarmActivity.this,
+                                            "Successfully Saved!", Toast.LENGTH_LONG)
+                                            .show();
+                                } else {
+                                    Toast.makeText(AddFarmActivity.this,
+                                            "Save Failed!", Toast.LENGTH_LONG)
+                                            .show();
+                                }
+                            }
+                        });
+                    }
+                }
+            });
     }
 }
