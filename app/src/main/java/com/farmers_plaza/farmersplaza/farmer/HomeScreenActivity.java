@@ -120,7 +120,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         imgBtnFarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showIntent(AddFarmActivity.class);
+                showIntent(FarmBrowseActivity.class);
             }
         });
     } // end clickFarm
