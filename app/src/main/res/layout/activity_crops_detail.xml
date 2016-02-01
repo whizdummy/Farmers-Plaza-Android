@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <include layout="@layout/toolbar"
+    <include
+        layout="@layout/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -14,49 +16,49 @@
         android:background="@drawable/crops"></FrameLayout>
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollView" >
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Crop Name"
                 android:id="@+id/textView13"
-                android:textStyle="bold"
-                android:textAlignment="center" />
-
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="About Crop anything o yea, kayo na maglagaty"
-                android:id="@+id/textView14" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:text="Crop Name"
+                android:textAlignment="center"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Crop Details"
-                android:id="@+id/textView15"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/text_view_crop_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="About Crop anything o yea, kayo na maglagaty"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Crop Details"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_view_crop_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Blah blah blah kayo na mag lagay"
-                android:id="@+id/textView16" />
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
         </LinearLayout>
     </ScrollView>

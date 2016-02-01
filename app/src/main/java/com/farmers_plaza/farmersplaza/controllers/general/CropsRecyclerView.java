@@ -1,6 +1,7 @@
 package com.farmers_plaza.farmersplaza.controllers.general;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.farmers_plaza.farmersplaza.R;
+import com.farmers_plaza.farmersplaza.farmer.CropDetailsActivity;
 
 import java.util.ArrayList;
 
@@ -37,6 +39,14 @@ public class CropsRecyclerView extends
     @Override
     public void onBindViewHolder(final FarmerViewHolder holder, final int position) {
         holder.textViewFarmName.setText(cropList.get(position));
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), CropDetailsActivity.class);
+                intent.putExtra("cropName", cropList.get(position));
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
